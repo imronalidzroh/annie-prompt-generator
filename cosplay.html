@@ -454,10 +454,36 @@
             el.textContent = ok ? `✅ ${label}: Compatible` : `⚠️ ${label}: May not match well`;
         }
 
-        // ─── SELECT ───
+        // ─── SELECT (OPTIMIZED — no full re-render) ───
         function selectChip(key, id) {
             state[key] = id;
-            renderAll();
+
+            // Scene preset changes need full re-render (section lock toggles)
+            if (key === 'scenePreset') {
+                renderAll();
+                generate();
+                return;
+            }
+
+            // Fast CSS toggle for non-preset selections
+            const gridMap = {
+                pose: 'poseGrid', angle: 'angleGrid', device: 'deviceGrid',
+                expression: 'exprGrid', mood: 'moodGrid'
+            };
+            const gridId = gridMap[key];
+            if (gridId) {
+                const grid = document.getElementById(gridId);
+                const prev = grid.querySelector('.vcard.selected');
+                if (prev) prev.classList.remove('selected');
+                const cards = grid.querySelectorAll('.vcard');
+                cards.forEach(c => {
+                    if (c.getAttribute('onclick')?.includes(`'${id}'`)) {
+                        c.classList.add('selected');
+                    }
+                });
+            }
+
+            updateCompatStatus();
             generate();
         }
 

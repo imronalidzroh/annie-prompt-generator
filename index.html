@@ -647,10 +647,56 @@
             el.textContent = ok ? `✅ ${label}: Compatible` : `⚠️ ${label}: May not match well`;
         }
 
-        // ─── SELECT ───
+        // ─── SELECT (OPTIMIZED — no full re-render) ───
         function selectChip(key, id) {
+            const oldId = state[key];
             state[key] = id;
-            renderAll();
+
+            // 1. Fast CSS toggle — find the grid that owns this stateKey
+            const gridMap = {
+                pose: 'poseGrid', angle: 'angleGrid', device: 'deviceGrid',
+                mood: 'moodGrid', expression: 'exprGrid', microPose: 'microGrid',
+                hairstyle: 'hairGrid', makeup: 'makeupGrid'
+            };
+            const gridId = gridMap[key];
+            if (gridId) {
+                const grid = document.getElementById(gridId);
+                // Remove old selection
+                const prev = grid.querySelector('.vcard.selected');
+                if (prev) prev.classList.remove('selected');
+                // Add new selection — find by onclick attribute containing the id
+                const cards = grid.querySelectorAll('.vcard');
+                cards.forEach(c => {
+                    if (c.getAttribute('onclick')?.includes(`'${id}'`)) {
+                        c.classList.add('selected');
+                    }
+                });
+            }
+
+            // 2. Only re-render grids that have compatibility dependencies on the changed key
+            const compatDeps = {
+                pose: ['angleGrid', 'microGrid'],
+                device: ['angleGrid', 'moodGrid'],
+                mood: ['exprGrid', 'makeupGrid'],
+                hairstyle: ['angleGrid']
+            };
+            const affectedGrids = compatDeps[key] || [];
+            const gridDataMap = {
+                angleGrid: [ANGLES, 'angle', 'angleSearch'],
+                moodGrid: [MOODS, 'mood', 'moodSearch'],
+                exprGrid: [EXPRESSIONS, 'expression', 'exprSearch'],
+                microGrid: [MICRO_POSES, 'microPose', 'microSearch'],
+                makeupGrid: [MAKEUP, 'makeup', 'makeupSearch']
+            };
+            affectedGrids.forEach(gId => {
+                const data = gridDataMap[gId];
+                if (data) renderVisuals(gId, data[0], data[1], data[2]);
+            });
+
+            // 3. Update compat status indicators
+            updateCompatStatus();
+
+            // 4. Regenerate prompt text (lightweight)
             generate();
         }
 
