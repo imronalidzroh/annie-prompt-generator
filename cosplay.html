@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎭 Annie — Cosplay Anime Generator</title>
+    <title>🎭 Annie — Generator Cosplay Anime</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
         rel="stylesheet">
@@ -29,9 +29,9 @@
 
     <div class="page">
         <header>
-            <h1>🎭 Annie — Cosplay Anime Generator</h1>
-            <div class="sub">Anime Cosplay • Face Merge • Gemini Nano Banana v5.3</div>
-            <a class="nav-link" href="index.html">← Back to Annie Influencer</a>
+            <h1>🎭 Annie — Generator Cosplay Anime</h1>
+            <div class="sub">Cosplay Anime • Gabung Wajah • Gemini Nano Banana v5.3</div>
+            <a class="nav-link" href="index.html">← Kembali ke Annie Influencer</a>
         </header>
 
         <div class="main-layout">
@@ -41,53 +41,53 @@
                 <!-- 🔒 LOCKED: Face Reference -->
                 <div class="card">
                     <div class="card-head">
-                        <div class="card-title">🧑 Face Reference</div>
-                        <span class="badge badge-lock">🔒 Upload Required</span>
+                        <div class="card-title">🧑 Referensi Wajah</div>
+                        <span class="badge badge-lock">🔒 Perlu Upload</span>
                     </div>
-                    <div class="lock-text">Upload your real face reference (3×3 grid recommended).
-                        Face geometry is ABSOLUTELY LOCKED — expression changes only from selection below.</div>
+                    <div class="lock-text">Upload referensi wajah asli (disarankan grid 3×3).
+                        Geometri wajah TERKUNCI MUTLAK — ekspresi hanya berubah dari pilihan di bawah.</div>
                 </div>
 
                 <!-- 🔒 LOCKED: Character Reference -->
                 <div class="card">
                     <div class="card-head">
-                        <div class="card-title">🎭 Character Reference</div>
-                        <span class="badge badge-lock">🖼️ Upload Required</span>
+                        <div class="card-title">🎭 Referensi Karakter</div>
+                        <span class="badge badge-lock">🖼️ Perlu Upload</span>
                     </div>
-                    <div class="lock-text">Upload your target anime/game character image.
-                        Costume, accessories, hair color & style will be taken EXACTLY from this reference. Do NOT
-                        alter.</div>
+                    <div class="lock-text">Upload gambar karakter anime/game target.
+                        Kostum, aksesoris, warna & gaya rambut akan diambil PERSIS dari referensi ini. JANGAN diubah.
+                    </div>
                 </div>
 
                 <!-- 🔒 LOCKED: Background -->
                 <div class="card">
                     <div class="card-head">
-                        <div class="card-title">🌄 Background</div>
-                        <span class="badge badge-lock">🖼️ Upload Required</span>
+                        <div class="card-title">🌄 Latar Belakang</div>
+                        <span class="badge badge-lock">🖼️ Perlu Upload</span>
                     </div>
-                    <div class="lock-text">Upload your scene/background image.
-                        Subject will be integrated naturally — matching scale, perspective, shadows, and color
-                        temperature.</div>
+                    <div class="lock-text">Upload gambar latar belakang/scene.
+                        Subjek akan diintegrasikan secara natural — skala, perspektif, bayangan, dan suhu warna cocok.
+                    </div>
                 </div>
 
                 <!-- 🔒 LOCKED: Makeup (Follows Character) -->
                 <div class="card">
                     <div class="card-head">
-                        <div class="card-title">💄 Makeup</div>
-                        <span class="badge badge-lock">🔒 Follows Character</span>
+                        <div class="card-title">💄 Riasan Wajah</div>
+                        <span class="badge badge-lock">🔒 Ikut Karakter</span>
                     </div>
-                    <div class="lock-text">Makeup is LOCKED to the cosplay character reference.
-                        Eye makeup, lip color, blush, and all beauty details will be replicated EXACTLY from the
-                        anime/game character — adapted to real cosmetics on real skin.</div>
+                    <div class="lock-text">Riasan TERKUNCI mengikuti referensi karakter cosplay.
+                        Riasan mata, warna bibir, blush, dan semua detail kecantikan akan direplikasi PERSIS dari
+                        karakter anime/game — diadaptasi ke kosmetik nyata di kulit asli.</div>
                 </div>
 
                 <!-- SELECTABLE: Scene Preset -->
                 <div class="card">
                     <div class="card-head">
-                        <div class="card-title">🎬 Scene Preset</div>
-                        <div><span class="badge">Select</span> <span class="badge" id="presetCount">5</span></div>
+                        <div class="card-title">🎬 Preset Adegan</div>
+                        <div><span class="badge">Pilih</span> <span class="badge" id="presetCount">5</span></div>
                     </div>
-                    <input type="text" class="search-input" id="presetSearch" placeholder="🔍 Search preset..."
+                    <input type="text" class="search-input" id="presetSearch" placeholder="🔍 Cari preset..."
                         oninput="filterCards('preset')">
                     <div class="card-grid" id="presetGrid"></div>
                 </div>
@@ -97,10 +97,10 @@
                     <!-- SELECTABLE: Pose -->
                     <div class="card">
                         <div class="card-head">
-                            <div class="card-title">🕺 Pose</div>
-                            <div><span class="badge">Select</span> <span class="badge" id="poseCount">50</span></div>
+                            <div class="card-title">🕺 Gaya Pose</div>
+                            <div><span class="badge">Pilih</span> <span class="badge" id="poseCount">50</span></div>
                         </div>
-                        <input type="text" class="search-input" id="poseSearch" placeholder="🔍 Search pose..."
+                        <input type="text" class="search-input" id="poseSearch" placeholder="🔍 Cari pose..."
                             oninput="filterCards('pose')">
                         <div class="card-grid" id="poseGrid"></div>
                         <div class="compat-status" id="poseCompat"></div>
@@ -111,10 +111,10 @@
                     <!-- SELECTABLE: Camera Angle -->
                     <div class="card">
                         <div class="card-head">
-                            <div class="card-title">📐 Camera Angle</div>
-                            <div><span class="badge">Select</span> <span class="badge" id="angleCount">40</span></div>
+                            <div class="card-title">📐 Sudut Kamera</div>
+                            <div><span class="badge">Pilih</span> <span class="badge" id="angleCount">40</span></div>
                         </div>
-                        <input type="text" class="search-input" id="angleSearch" placeholder="🔍 Search angle..."
+                        <input type="text" class="search-input" id="angleSearch" placeholder="🔍 Cari sudut..."
                             oninput="filterCards('angle')">
                         <div class="card-grid" id="angleGrid"></div>
                         <div class="compat-status" id="angleCompat"></div>
@@ -125,10 +125,10 @@
                     <!-- SELECTABLE: Camera Device -->
                     <div class="card">
                         <div class="card-head">
-                            <div class="card-title">📱 Camera Type</div>
-                            <div><span class="badge">Select</span> <span class="badge" id="deviceCount">22</span></div>
+                            <div class="card-title">📱 Jenis Kamera</div>
+                            <div><span class="badge">Pilih</span> <span class="badge" id="deviceCount">22</span></div>
                         </div>
-                        <input type="text" class="search-input" id="deviceSearch" placeholder="🔍 Search camera..."
+                        <input type="text" class="search-input" id="deviceSearch" placeholder="🔍 Cari kamera..."
                             oninput="filterCards('device')">
                         <div class="card-grid" id="deviceGrid"></div>
                     </div>
@@ -138,10 +138,10 @@
                     <!-- SELECTABLE: Expression -->
                     <div class="card">
                         <div class="card-head">
-                            <div class="card-title">😊 Expression</div>
-                            <div><span class="badge">Select</span> <span class="badge" id="exprCount">22</span></div>
+                            <div class="card-title">😊 Ekspresi Wajah</div>
+                            <div><span class="badge">Pilih</span> <span class="badge" id="exprCount">22</span></div>
                         </div>
-                        <input type="text" class="search-input" id="exprSearch" placeholder="🔍 Search expression..."
+                        <input type="text" class="search-input" id="exprSearch" placeholder="🔍 Cari ekspresi..."
                             oninput="filterCards('expr')">
                         <div class="card-grid" id="exprGrid"></div>
                         <div class="compat-status" id="exprCompat"></div>
@@ -152,10 +152,10 @@
                     <!-- SELECTABLE: Mood / Lighting -->
                     <div class="card">
                         <div class="card-head">
-                            <div class="card-title">💡 Mood / Lighting</div>
-                            <div><span class="badge">Select</span> <span class="badge" id="moodCount">23</span></div>
+                            <div class="card-title">💡 Suasana / Pencahayaan</div>
+                            <div><span class="badge">Pilih</span> <span class="badge" id="moodCount">23</span></div>
                         </div>
-                        <input type="text" class="search-input" id="moodSearch" placeholder="🔍 Search mood..."
+                        <input type="text" class="search-input" id="moodSearch" placeholder="🔍 Cari suasana..."
                             oninput="filterCards('mood')">
                         <div class="card-grid" id="moodGrid"></div>
                         <div class="compat-status" id="moodCompat"></div>
@@ -169,17 +169,17 @@
                 <div class="out-card">
                     <div class="out-section">
                         <span class="out-label sys">🎭 COSPLAY SYSTEM PROMPT</span>
-                        <span style="font-size:0.65rem;color:var(--text-muted);margin-left:6px;">Copas 1× ke Nano</span>
+                        <span style="font-size:0.65rem;color:var(--text-muted);margin-left:6px;">Salin 1× ke Nano</span>
                         <button class="btn btn-sys"
                             style="float:right;padding:5px 10px;font-size:0.65rem;flex:none;width:auto;"
-                            onclick="copySystem()">📋 Copy System</button>
+                            onclick="copySystem()">📋 Salin Sistem</button>
                     </div>
 
                     <hr class="sep">
 
                     <div class="out-section">
                         <span class="out-label img">🎭 COSPLAY PROMPT</span>
-                        <div class="out-box" id="outImage">Select options to generate...</div>
+                        <div class="out-box" id="outImage">Pilih opsi untuk menghasilkan prompt...</div>
                     </div>
 
                     <div class="out-section">
@@ -188,13 +188,39 @@
                     </div>
 
                     <div class="action-row">
-                        <button class="btn btn-ghost" onclick="randomize()">🎲 Random</button>
-                        <button class="btn btn-banana" onclick="copyPrompt()">📋 Copy Prompt</button>
+                        <button class="btn btn-ghost" onclick="randomize()">🎲 Acak</button>
+                        <button class="btn btn-banana" onclick="copyPrompt()">📋 Salin Prompt</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- 📱 Bottom Navigation Bar (Mobile PWA) -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="index.html" class="bottom-nav-item">
+                <span class="nav-icon">🏠</span>
+                <span>Beranda</span>
+            </a>
+            <a href="cosplay.html" class="bottom-nav-item active">
+                <span class="nav-icon">🎭</span>
+                <span>Cosplay</span>
+            </a>
+            <button class="bottom-nav-item" onclick="randomize()">
+                <span class="nav-icon">🎲</span>
+                <span>Acak</span>
+            </button>
+            <button class="bottom-nav-item" onclick="copyPrompt()">
+                <span class="nav-icon">📋</span>
+                <span>Salin</span>
+            </button>
+            <button class="bottom-nav-item" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                <span class="nav-icon">⬆️</span>
+                <span>Atas</span>
+            </button>
+        </div>
+    </nav>
 
     <script src="data.js"></script>
     <script src="data-extension.js"></script>
