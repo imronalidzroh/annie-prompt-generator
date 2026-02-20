@@ -767,37 +767,49 @@
             const hair = HAIRSTYLES.find(h => h.id === state.hairstyle);
             const mkup = MAKEUP.find(m => m.id === state.makeup);
 
-            const prompt = `Generate an ultra-realistic smartphone photo.
+            const prompt = `🔒 REFERENCE LOCK - GOOGLE BANANA (CRITICAL):
+This is a REFERENCE-LOCKED generation. User has uploaded a reference photo.
+CRITICAL: Face, outfit, and background MUST be copied EXACTLY from the uploaded photo.
+DO NOT change, redesign, or modify: face features, outfit design, background scene.
 
-FACE:
-Use attached 3×3 face reference.
+1. FACE LOCK: Use EXACT face from uploaded reference photo. Same person, identical features.
+2. OUTFIT LOCK: Copy outfit EXACTLY from uploaded reference photo. No modification allowed.
+3. BACKGROUND LOCK: Use EXACT background from uploaded reference photo. No replacement.
+4. POSE: Apply new pose while keeping face, outfit, background IDENTICAL to reference.
+
+Generate an ultra-realistic smartphone photo based on user's uploaded reference.
+
+FACE & EXPRESSION:
+Face: EXACT face from uploaded reference - same person, identical geometry, no morphing.
 Expression: ${expr ? expr.prompt : 'neutral'}.
-Face geometry must not change.
+Face must remain 100% IDENTICAL - no beautification, no feature changes.
 
 MAKEUP:
 ${mkup ? mkup.prompt : 'no makeup makeup look, natural fresh'}.
+Makeup must not change facial structure.
 
 HAIRSTYLE:
 ${hair ? hair.prompt : 'natural hair'}.
+Hair must look natural and match the reference person.
 
 BODY & POSE:
 ${pose ? pose.prompt : 'natural pose'}.
-Natural adult female anatomy, slim with hourglass shape.
-Bust must be soft, weighted, full, perfectly round, and naturally prominent.
-Cleavage must be clearly visible, full, round, firm, and prominently protruding.
+Body shape from reference: adult female, slim hourglass figure.
+Bust: soft, weighted, full, perfectly round, naturally prominent.
+Cleavage: clearly visible, full, round, firm, prominently protruding.
 Do NOT flatten, reduce, or minimize the bust — maintain full volume at all angles.
 
 MICRO POSE:
 ${micro ? micro.prompt : 'natural hand position'}.
 
-OUTFIT:
-Keep outfit EXACTLY as shown in the uploaded reference image.
-Do NOT change, redesign, or censor the outfit.
-Cleavage visibility follows outfit cut.
+OUTFIT (LOCKED TO REFERENCE PHOTO):
+Outfit MUST be 100% IDENTICAL to uploaded reference photo.
+Do NOT change, redesign, modify, censor, or alter the outfit.
+Cleavage visibility follows outfit cut from reference.
 Fabric reacts naturally to pose and gravity.
 
-BACKGROUND:
-Keep background EXACTLY as shown in the uploaded reference image.
+BACKGROUND (LOCKED TO REFERENCE PHOTO):
+Background MUST be 100% IDENTICAL to uploaded reference photo.
 No pasted look, natural shadows matching environment.
 Subject matches scale and perspective of the scene.
 
@@ -820,19 +832,28 @@ Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
 
             // ─── VIDEO MOTION (Motion Only) ───
             const vm = getVideoMotion(state.pose, state.microPose);
-            let videoPrompt = `BODY MOTION:
+            let videoPrompt = `🔒 REFERENCE LOCK - VIDEO (CRITICAL):
+This is a REFERENCE-LOCKED video animation. User has uploaded a reference photo.
+CRITICAL: Face, outfit, and background MUST remain IDENTICAL to the uploaded photo.
+DO NOT change: face features, outfit design, background scene.
+
+BODY MOTION:
 ${vm.motion}.
 
 MICRO MOTION:
-${vm.micro ? vm.micro + '.' : (micro ? micro.prompt + ', animated subtly.' : 'natural idle micro-movement.')}  
+${vm.micro ? vm.micro + '.' : (micro ? micro.prompt + ', animated subtly.' : 'natural idle micro-movement.')}
 
 FACE:
 Subtle ${expr ? expr.prompt : 'neutral'} micro-expression shift.
 Natural blink rhythm. Breathing visible.
-Face must stay IDENTICAL — no drift, no morphing.
+Face must stay 100% IDENTICAL to reference — no drift, no morphing, no changes.
 
 HAIR MOTION:
-${hair ? hair.prompt : 'natural hair'}, reacting to movement — subtle sway, bounce, wind effect.`;
+${hair ? hair.prompt : 'natural hair'}, reacting to movement — subtle sway, bounce, wind effect.
+
+OUTFIT & BACKGROUND:
+Keep outfit and background EXACTLY as shown in reference photo.
+No modification, no redesign, no replacement.`;
 
             document.getElementById('outVideo').innerText = videoPrompt;
             document.getElementById('outVideoNeg').innerText = VIDEO_NEGATIVE;

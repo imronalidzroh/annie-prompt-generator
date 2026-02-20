@@ -8,12 +8,19 @@
 // ─────────────────────────────────────
 // 🔒 SYSTEM PROMPT (COPAS UTUH)
 // ─────────────────────────────────────
-const SYSTEM_PROMPT = `You generate realistic adult human photos based strictly on user references.
-Do NOT invent, stylize, or redesign anything.
+const SYSTEM_PROMPT = `You generate realistic adult human photos based STRICTLY on user's uploaded reference photo.
+This is a REFERENCE-LOCKED generation. DO NOT invent, stylize, or redesign anything.
+
+🔒 REFERENCE LOCK RULES (HIGHEST PRIORITY):
+User will upload a reference photo. You MUST copy from that photo:
+1. FACE: Use EXACT face from uploaded reference. Same person, identical features, no morphing.
+2. OUTFIT: Copy outfit EXACTLY from uploaded reference. No redesign, no censorship, no modification.
+3. BACKGROUND: Use EXACT background from uploaded reference. No replacement, no modification.
+4. POSE: Apply new pose while keeping face, outfit, and background 100% IDENTICAL to reference.
 
 1. FACE LOCK (HIGHEST PRIORITY)
-Use ONLY the user-provided 3×3 face reference.
-Face geometry is ABSOLUTELY LOCKED.
+Use ONLY the user-provided 3×3 face reference from uploaded photo.
+Face geometry is ABSOLUTELY LOCKED - no changes allowed.
 Allowed expressions: from user selection only.
 Makeup is allowed but must not change facial structure.
 No face morphing, no beautification, no western features.
@@ -25,7 +32,7 @@ Do NOT flatten or reduce the bust. Maintain curvy yet slim proportions
 No exaggeration, no deformation, no plastic curves.
 
 3. OUTFIT → BODY RULE (STRICT)
-Outfit must be IDENTICAL to user input.
+Outfit must be IDENTICAL to user's uploaded reference photo.
 Body appearance must follow outfit behavior:
 Open neckline → natural cleavage visible, perfectly round.
 Closed outfit → bust covered but rounded.
@@ -33,7 +40,7 @@ Fabric reacts naturally (stretch, folds, gravity).
 Outfit redesign or censorship forbidden.
 
 4. BACKGROUND INTEGRATION
-Use ONLY user background input.
+Use ONLY user's uploaded background from reference photo.
 Subject must match: scale, perspective, color temperature.
 Real contact shadows required. No cut-out or pasted look.
 
@@ -49,19 +56,21 @@ Ultra-clear. No blur. No noise. RAW photo realism. HD 4K`;
 // 🔒 LOCKED IDENTITY (NEVER CHANGES)
 // ─────────────────────────────────────
 const LOCKED_IDENTITY = {
-    face: "use attached 3×3 face reference, face geometry absolutely locked, identical facial features, same person, natural Indonesian beauty",
+    face: "use attached 3×3 face reference from uploaded photo, face geometry absolutely locked, identical facial features, same person, natural Indonesian beauty, no changes allowed",
     body: "natural adult female anatomy, hourglass body shape, slim curvy figure, soft weighted realistic bust, full round naturally prominent bust, cleavage clearly visible round firm and prominently protruding, do not flatten or reduce bust volume, natural feminine curves",
     skin: "real human skin texture, natural Indonesian warm skin tone, natural skin pores, not plastic, not airbrushed",
-    rule: "face and body NEVER change regardless of outfit, pose, or background"
+    outfit: "outfit must be 100% identical to uploaded reference photo, no modification, no redesign, no censorship",
+    background: "background must be 100% identical to uploaded reference photo, no replacement, no modification",
+    rule: "face, outfit, and body NEVER change regardless of pose, expression, or camera angle - all locked to uploaded reference"
 };
 
 // ─────────────────────────────────────
 // 🚫 GLOBAL NEGATIVE (ALWAYS ON)
 // ─────────────────────────────────────
-const GLOBAL_NEGATIVE = "face morphing, different face, face inconsistency, double eyelid, high nose bridge, sharp jawline, V-shape face, western features, exaggerated body, bolt-on chest, flat chest, CGI, 3D render, illustration, plastic skin, doll face, beauty filter, heavy makeup, contouring, fake lashes, studio lighting, pasted background, noise, deformed hands, extra fingers, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face, airbrushed skin, smooth skin without pores";
+const GLOBAL_NEGATIVE = "face morphing, different face, face inconsistency, changed outfit, outfit modification, outfit redesign, outfit censorship, changed background, background replacement, background modification, double eyelid, high nose bridge, sharp jawline, V-shape face, western features, exaggerated body, bolt-on chest, flat chest, CGI, 3D render, illustration, plastic skin, doll face, beauty filter, heavy makeup, contouring, fake lashes, studio lighting, pasted background, noise, deformed hands, extra fingers, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face, airbrushed skin, smooth skin without pores";
 
 // 🚫 VIDEO NEGATIVE (ALWAYS ON)
-const VIDEO_NEGATIVE = "face drift, face morphing, different face, exaggerated motion, stiff animation, morphing body, bad hands, extra fingers, teleporting, jump cut, robotic movement, CGI look, plastic skin, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face";
+const VIDEO_NEGATIVE = "face drift, face morphing, different face, changed outfit, outfit modification, changed background, background replacement, exaggerated motion, stiff animation, morphing body, bad hands, extra fingers, teleporting, jump cut, robotic movement, CGI look, plastic skin, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face";
 
 // ====================================================
 // 📸 REFERENCE IMAGE HELPER (810+ Images)

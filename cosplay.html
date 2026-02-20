@@ -542,7 +542,7 @@
             const preset = COSPLAY_PRESETS.find(p => p.id === state.scenePreset);
             const isNormal = state.scenePreset === 'SPR01';
 
-            const cosplayNegative = "anime, manga, illustration, 2D, cel-shading, flat coloring, bold outlines, cartoon, digital art, painted look, airbrushed skin, smooth skin without pores, line art, comic style, face morphing, different face, wrong costume, simplified costume, western features, exaggerated body, CGI artifacts, low quality, noise, deformed hands, extra fingers, pasted background, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face";
+            const cosplayNegative = "face morphing, different face, face inconsistency, changed costume, costume modification, costume redesign, changed background, background replacement, anime, manga, illustration, 2D, cel-shading, flat coloring, bold outlines, cartoon, digital art, painted look, airbrushed skin, smooth skin without pores, line art, comic style, western features, exaggerated body, CGI artifacts, low quality, noise, deformed hands, extra fingers, pasted background, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face";
 
             if (state.scenePreset === 'SPR02') {
                 // SILHOUETTE SHADOW: Full Ambient Follow Mode — no person visible
@@ -600,7 +600,18 @@ Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
 
             if (!isNormal) {
                 // OTHER PRESETS: Use preset composition + face/character/background
-                const prompt = `PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
+                const prompt = `🔒 REFERENCE LOCK - COSPLAY (CRITICAL):
+This is a REFERENCE-LOCKED cosplay generation. User has uploaded THREE reference images:
+1. FACE: 3×3 face grid of real person
+2. CHARACTER: Anime/game character for costume reference
+3. BACKGROUND: Scene/background image
+
+CRITICAL RULES:
+- FACE: Must be EXACT copy from 3×3 face grid - same person, identical features
+- COSTUME: Must be EXACT copy from character reference - no modification
+- BACKGROUND: Must be EXACT copy from background reference - no replacement
+
+PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
 
 SCENE COMPOSITION:
 ${preset ? preset.prompt : 'artistic cosplay composition'}.
@@ -623,11 +634,13 @@ Slim body with full, round, naturally prominent bust.
 Cleavage must be visibly full, round, and prominent when costume allows.
 Do NOT flatten or reduce the bust. Maintain curvy yet slim proportions.
 
-COSTUME (from character reference):
+COSTUME (LOCKED TO CHARACTER REFERENCE):
+Costume MUST be 100% IDENTICAL to uploaded character reference image.
 Recreate the anime costume using REAL cosplay materials.
 Real fabric (silk, leather, cotton), real metal accessories, real wig.
 Colors match character but rendered as physical real-world materials.
 Do NOT draw the costume — show it as real sewn fabric.
+Do NOT change, redesign, modify, or censor the costume design.
 
 MAKEUP (LOCKED — follows character):
 Replicate the anime/game character's makeup using REAL cosmetics on real skin.
@@ -635,9 +648,11 @@ Eye makeup (eyeshadow color, eyeliner style, lashes), lip color, blush placement
 Adapt anime-style makeup into realistic cosplay makeup. No flat anime coloring — real cosmetic texture.
 If character has fantasy elements (markings, glowing eyes), adapt as realistic face paint or contact lenses.
 
-BACKGROUND:
+BACKGROUND (LOCKED TO REFERENCE):
+Background MUST be 100% IDENTICAL to uploaded background reference image.
 Use background image as a real scene.
 Real contact shadows. Natural integration. No pasted look.
+Subject matches scale and perspective of the background scene.
 
 STYLE ENFORCEMENT:
 This MUST look like a real photograph from a professional cosplay photoshoot.
@@ -660,7 +675,18 @@ Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
             const expr = EXPRESSIONS.find(e => e.id === state.expression);
             const mood = MOODS.find(m => m.id === state.mood);
 
-            const prompt = `PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
+            const prompt = `🔒 REFERENCE LOCK - COSPLAY (CRITICAL):
+This is a REFERENCE-LOCKED cosplay generation. User has uploaded THREE reference images:
+1. FACE: 3×3 face grid of real person
+2. CHARACTER: Anime/game character for costume reference
+3. BACKGROUND: Scene/background image
+
+CRITICAL RULES:
+- FACE: Must be EXACT copy from 3×3 face grid - same person, identical features
+- COSTUME: Must be EXACT copy from character reference - no modification
+- BACKGROUND: Must be EXACT copy from background reference - no replacement
+
+PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
 
 IMPORTANT — the anime character image is a COSTUME REFERENCE ONLY.
 Do NOT replicate its art style. Render everything as a REAL PHOTOGRAPH.
@@ -680,11 +706,13 @@ Slim body with full, round, naturally prominent bust.
 Cleavage must be visibly full, round, and prominent when costume allows.
 Do NOT flatten or reduce the bust. Maintain curvy yet slim proportions.
 
-COSTUME (from character reference):
+COSTUME (LOCKED TO CHARACTER REFERENCE):
+Costume MUST be 100% IDENTICAL to uploaded character reference image.
 Recreate the anime costume using REAL cosplay materials.
 Real fabric (silk, leather, cotton), real metal accessories, real wig.
 Colors match character but rendered as physical real-world materials.
 Do NOT draw the costume — show it as real sewn fabric.
+Do NOT change, redesign, modify, or censor the costume design.
 
 MAKEUP (LOCKED — follows character):
 Replicate the anime/game character's makeup using REAL cosmetics on real skin.
@@ -701,9 +729,11 @@ ${angle ? angle.prompt : 'eye level medium shot'}.
 ${device ? device.prompt : 'iPhone 17 Pro Max, 24mm wide lens, handheld candid'}.
 Real depth of field.
 
-BACKGROUND:
+BACKGROUND (LOCKED TO REFERENCE):
+Background MUST be 100% IDENTICAL to uploaded background reference image.
 Use background image as a real scene.
 Natural integration. Real contact shadows. No pasted look.
+Subject matches scale and perspective of the background scene.
 
 LIGHTING:
 ${mood ? mood.prompt : 'natural ambient'}.
