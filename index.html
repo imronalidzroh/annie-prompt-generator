@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍌 Annie — Nano Banana Prompt Generator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Annie">
+    <link rel="apple-touch-icon" href="icons/icon-512.png">
+    <meta name="description" content="AI Influencer Prompt Generator — ultra-realistic photo & video prompts">
+</head>
+
+<body>
+    <!-- Premium Aurora Background -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>🍌 Annie — Nano Banana Generator</h1>
+            <div class="sub">Ultra-Realistic Smartphone Photo • Gemini Nano Banana v5.3</div>
+            <div class="priority-bar">
+                <span class="hot">🔒 Reference Lock</span>
+                <span>📷 Realism</span>
+                <span>✨ Quality</span>
+                <span>🚫 Creativity: OFF</span>
+            </div>
+            <div style="margin-top: 12px;">
+                <a href="cosplay.html" class="nav-link">🎭 Cosplay Anime Generator →</a>
+            </div>
+
+            <!-- 🎭 Persona Presets -->
+            <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="personaBar">
+                <button class="btn btn-ghost" style="width:auto;padding:8px 16px;font-size:0.75rem;border-radius:50px;"
+                    onclick="applyPersona('girlNextDoor')">🏡 Girl Next Door</button>
+                <button class="btn btn-ghost" style="width:auto;padding:8px 16px;font-size:0.75rem;border-radius:50px;"
+                    onclick="applyPersona('bossBabe')">💼 Boss Babe</button>
+                <button class="btn btn-ghost" style="width:auto;padding:8px 16px;font-size:0.75rem;border-radius:50px;"
+                    onclick="applyPersona('aesthetic')">✨ Aesthetic Princess</button>
+                <button class="btn btn-ghost" style="width:auto;padding:8px 16px;font-size:0.75rem;border-radius:50px;"
+                    onclick="applyPersona('sporty')">🏃 Sporty Casual</button>
+                <button class="btn btn-ghost" style="width:auto;padding:8px 16px;font-size:0.75rem;border-radius:50px;"
+                    onclick="applyPersona('nightOut')">🌙 Night Out Glam</button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- LEFT: Inputs -->
+            <div class="left-col">
+
+                <!-- 🔒 LOCKED: Identity -->
+                <div class="card locked">
+                    <div class="card-head">
+                        <div class="card-title">🔒 Locked Identity</div>
+                        <span class="badge badge-lock">Auto-Locked</span>
+                    </div>
+                    <div class="lock-text">Face: 3×3 reference LOCKED ⬥ Body: hourglass, soft realistic bust, cleavage
+                        clearly visible, round, firm and prominent ⬥ Skin: natural Indonesian warm tone ⬥ NEVER changes
+                        regardless of selections below</div>
+                </div>
+
+                <!-- 🔒 LOCKED: Outfit from Reference Image -->
+                <div class="card locked">
+                    <div class="card-head">
+                        <div class="card-title">👗 Outfit</div>
+                        <span class="badge badge-lock">🖼️ From Reference Image</span>
+                    </div>
+                    <div class="lock-text">Outfit is taken EXACTLY from your uploaded reference image. Generator will
+                        NOT change, redesign, or censor it. Fabric reacts naturally.</div>
+                </div>
+
+                <!-- 🔒 LOCKED: Background from Reference Image -->
+                <div class="card locked">
+                    <div class="card-head">
+                        <div class="card-title">🌄 Background</div>
+                        <span class="badge badge-lock">🖼️ From Reference Image</span>
+                    </div>
+                    <div class="lock-text">Background is taken from your uploaded reference image. Natural shadows,
+                        matching scale and perspective. No pasted look.</div>
+                </div>
+
+                <!-- SELECTABLE: Pose (VISUAL CARDS) -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">1</span> Pose</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="poseCount">50</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="poseSearch" placeholder="🔍 Search pose..."
+                        oninput="filterCards('pose')">
+                    <div class="card-grid" id="poseGrid"></div>
+                    <div class="compat-status" id="poseCompat"></div>
+                </div>
+
+                <!-- SELECTABLE: Camera Angle (VISUAL CARDS) -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">2</span> Camera Angle</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="angleCount">40</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="angleSearch" placeholder="🔍 Search angle..."
+                        oninput="filterCards('angle')">
+                    <div class="card-grid" id="angleGrid"></div>
+                    <div class="compat-status" id="angleCompat"></div>
+                </div>
+
+                <!-- SELECTABLE: Device -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">3</span> Device / Camera</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="deviceCount">22</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="deviceSearch" placeholder="🔍 Search device..."
+                        oninput="filterCards('device')">
+                    <div class="card-grid" id="deviceGrid"></div>
+                </div>
+
+                <!-- SELECTABLE: Mood -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">4</span> Mood / Lighting</div>
+                        <div>
+                            <button class="btn btn-ghost"
+                                style="width:auto;padding:6px 14px;font-size:0.7rem;border-radius:8px;margin-right:6px;"
+                                onclick="matchMoodToTime()">⏰ Match Time</button>
+                            <span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="moodCount">22</span>
+                        </div>
+                    </div>
+                    <input type="text" class="search-input" id="moodSearch" placeholder="🔍 Search mood..."
+                        oninput="filterCards('mood')">
+                    <div class="card-grid" id="moodGrid"></div>
+                    <div class="compat-status" id="moodCompat"></div>
+                </div>
+
+                <!-- SELECTABLE: Expression -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">5</span> Expression</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="exprCount">22</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="exprSearch" placeholder="🔍 Search expression..."
+                        oninput="filterCards('expr')">
+                    <div class="card-grid" id="exprGrid"></div>
+                    <div class="compat-status" id="exprCompat"></div>
+                </div>
+
+                <!-- SELECTABLE: Micro Pose -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">6</span> Micro Pose</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="microCount">22</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="microSearch" placeholder="🔍 Search micro pose..."
+                        oninput="filterCards('micro')">
+                    <div class="card-grid" id="microGrid"></div>
+                </div>
+
+                <!-- SELECTABLE: Hairstyle -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">7</span> Hairstyle</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="hairCount">22</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="hairSearch" placeholder="🔍 Search hairstyle..."
+                        oninput="filterCards('hair')">
+                    <div class="card-grid" id="hairGrid"></div>
+                </div>
+
+                <!-- SELECTABLE: Makeup -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title"><span class="num">8</span> Makeup</div>
+                        <div><span class="badge badge-select">Select</span> <span class="badge badge-count"
+                                id="makeupCount">22</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="makeupSearch" placeholder="🔍 Search makeup..."
+                        oninput="filterCards('makeup')">
+                    <div class="card-grid" id="makeupGrid"></div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: Output -->
+            <div class="right-col">
+                <div class="out-card">
+                    <div class="out-section">
+                        <span class="out-label sys">🍌 SYSTEM PROMPT</span>
+                        <span style="font-size:0.65rem;color:var(--text-muted);margin-left:6px;">Copas 1× ke Nano</span>
+                        <button class="btn btn-sys"
+                            style="float:right;padding:5px 10px;font-size:0.65rem;flex:none;width:auto;"
+                            onclick="copySystem()">📋 Copy System</button>
+                    </div>
+
+                    <hr class="sep">
+
+                    <div class="out-section">
+                        <span class="out-label img">📸 IMAGE PROMPT</span>
+                        <div class="out-box" id="outImage">Select options to generate...</div>
+                    </div>
+
+                    <div class="out-section">
+                        <span class="out-label neg">🚫 NEGATIVE PROMPT</span>
+                        <div class="out-box" id="outNegative">...</div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn-ghost" onclick="randomize()">🎲 Random</button>
+                        <button class="btn btn-banana" onclick="copyPrompt()">📋 Copy Image</button>
+                    </div>
+
+                    <!-- 🧬 Prompt DNA -->
+                    <div class="out-section" style="margin-top:8px;">
+                        <span class="out-label" style="color:#7c3aed;background:#ede9fe;border-color:#ddd6fe;">🧬 PROMPT
+                            DNA</span>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <input type="text" id="dnaCode" class="text-input"
+                                style="margin:0;font-family:var(--font-code);font-size:0.8rem;" readonly
+                                placeholder="DNA code...">
+                            <button class="btn btn-ghost" style="width:auto;padding:10px 16px;white-space:nowrap;"
+                                onclick="copyDNA()">📋</button>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <input type="text" id="dnaInput" class="text-input"
+                                style="margin:0;font-family:var(--font-code);font-size:0.8rem;"
+                                placeholder="Paste DNA code to load...">
+                            <button class="btn btn-ghost" style="width:auto;padding:10px 16px;white-space:nowrap;"
+                                onclick="loadDNA()">📥</button>
+                        </div>
+                    </div>
+
+                    <hr class="sep">
+
+                    <div class="out-section">
+                        <span class="out-label vid">🎬 VIDEO MOTION PROMPT</span>
+                        <div class="out-box" id="outVideo">Select options to generate...</div>
+                    </div>
+
+                    <div class="out-section">
+                        <span class="out-label neg">🚫 VIDEO NEGATIVE</span>
+                        <div class="out-box" id="outVideoNeg">...</div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn-banana" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);"
+                            onclick="copyVideo()">📋 Copy Video</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="data-extension.js"></script>
+
+    <script>
+        // ═══════════════════════════════════════
+        // 🎨 SVG THUMBNAIL GENERATOR
+        // Unique visual for every pose & angle
+        // ═══════════════════════════════════════
+
+        const COLORS = {
+            standing: '#60a5fa',  // blue
+            sitting: '#34d399',  // green
+            lying: '#c084fc',  // purple
+            action: '#fb923c',  // orange
+            eye: '#60a5fa',
+            high: '#fbbf24',
+            overhead: '#f472b6',
+            low: '#ef4444',
+        };
+
+        // Each pose has unique body geometry [headX, headY, bodyAngle, leftArm, rightArm, leftLeg, rightLeg]
+        const POSE_SHAPES = {
+            P01: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [10, 24]], rArm: [[28, 16], [30, 24]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'relax' },
+            P02: { head: [22, 7], spine: [[22, 13], [22, 27]], lArm: [[16, 15], [12, 22]], rArm: [[28, 15], [32, 22]], lLeg: [[22, 27], [18, 42]], rLeg: [[22, 27], [26, 42]], note: 'confident' },
+            P03: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 26]], rArm: [[28, 16], [32, 26]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [27, 42]], note: 'hips' },
+            P04: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [26, 20]], rArm: [[28, 16], [18, 20]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'cross' },
+            P05: { head: [20, 8], spine: [[20, 14], [21, 28]], lArm: [[14, 16], [10, 24]], rArm: [[26, 16], [30, 22]], lLeg: [[21, 28], [17, 42]], rLeg: [[21, 28], [26, 40]], note: 'lean' },
+            P06: { head: [26, 8], spine: [[24, 14], [22, 28]], lArm: [[18, 16], [14, 24]], rArm: [[30, 16], [34, 22]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'shoulder' },
+            P07: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [26, 6]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'hair' },
+            P08: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[18, 16], [14, 24]], rArm: [[26, 16], [22, 24]], lLeg: [[22, 28], [20, 42]], rLeg: [[22, 28], [24, 42]], note: 'side' },
+            P09: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[18, 16], [14, 24]], rArm: [[26, 16], [30, 24]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'back' },
+            P10: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [28, 22]], rArm: [[28, 16], [16, 22]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'hug' },
+            P11: { head: [22, 12], spine: [[22, 18], [22, 30]], lArm: [[16, 20], [10, 28]], rArm: [[28, 20], [34, 28]], lLeg: [[22, 30], [18, 42]], rLeg: [[22, 30], [26, 42]], note: 'forward' },
+            P12: { head: [22, 7], spine: [[22, 13], [23, 28]], lArm: [[16, 15], [14, 26]], rArm: [[28, 15], [32, 22]], lLeg: [[23, 28], [19, 42]], rLeg: [[23, 28], [28, 42]], note: 'hip' },
+            P13: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [32, 8]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'door' },
+            // Sitting
+            P14: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [32, 24]], lLeg: [[22, 26], [14, 36], [14, 42]], rLeg: [[22, 26], [30, 36], [30, 42]], note: 'sit' },
+            P15: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [32, 24]], lLeg: [[22, 26], [16, 34], [22, 42]], rLeg: [[22, 26], [28, 34], [34, 42]], note: 'cross' },
+            P16: { head: [22, 12], spine: [[22, 18], [22, 30]], lArm: [[16, 20], [12, 28]], rArm: [[28, 20], [32, 28]], lLeg: [[22, 30], [16, 36], [14, 42]], rLeg: [[22, 30], [28, 36], [30, 42]], note: 'floor' },
+            P17: { head: [22, 10], spine: [[22, 16], [22, 28]], lArm: [[16, 18], [12, 26]], rArm: [[28, 18], [32, 26]], lLeg: [[22, 28], [16, 36], [16, 42]], rLeg: [[22, 28], [28, 36], [28, 42]], note: 'bed' },
+            P18: { head: [22, 10], spine: [[22, 16], [22, 30]], lArm: [[16, 18], [12, 26]], rArm: [[28, 18], [32, 26]], lLeg: [[22, 30], [18, 38], [16, 42]], rLeg: [[22, 30], [26, 38], [28, 42]], note: 'kneel' },
+            P19: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [16, 22]], rArm: [[28, 16], [28, 22]], lLeg: [[22, 26], [16, 34], [16, 42]], rLeg: [[22, 26], [28, 34], [28, 42]], note: 'cafe' },
+            P20: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [18, 10]], rArm: [[28, 16], [32, 24]], lLeg: [[22, 26], [16, 34], [16, 42]], rLeg: [[22, 26], [28, 34], [28, 42]], note: 'drink' },
+            P21: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [32, 22]], lLeg: [[22, 26], [18, 34], [16, 40]], rLeg: [[22, 26], [26, 34], [28, 40]], note: 'window' },
+            P22: { head: [22, 14], spine: [[22, 20], [22, 30]], lArm: [[16, 22], [10, 32]], rArm: [[28, 22], [34, 32]], lLeg: [[22, 30], [14, 38], [8, 42]], rLeg: [[22, 30], [30, 38], [36, 42]], note: 'legs' },
+            P23: { head: [22, 8], spine: [[22, 14], [22, 26]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [32, 24]], lLeg: [[22, 26], [16, 34], [22, 40]], rLeg: [[22, 26], [28, 34], [34, 40]], note: 'stool' },
+            P24: { head: [24, 10], spine: [[23, 16], [22, 28]], lArm: [[17, 18], [12, 14]], rArm: [[29, 18], [34, 24]], lLeg: [[22, 28], [14, 36], [14, 42]], rLeg: [[22, 28], [30, 36], [30, 42]], note: 'sofa' },
+            P25: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [14, 26]], rArm: [[28, 16], [30, 26]], lLeg: [[22, 28], [16, 36], [14, 42]], rLeg: [[22, 28], [28, 36], [30, 42]], note: 'steps' },
+            // Lying
+            P26: { head: [8, 22], spine: [[14, 22], [30, 24]], lArm: [[14, 18], [8, 14]], rArm: [[14, 26], [8, 30]], lLeg: [[30, 22], [40, 18]], rLeg: [[30, 26], [40, 30]], note: 'side' },
+            P27: { head: [22, 22], spine: [[22, 22], [22, 22]], lArm: [[16, 22], [8, 22]], rArm: [[28, 22], [36, 22]], lLeg: [[22, 28], [16, 38]], rLeg: [[22, 28], [28, 38]], note: 'back', isTopDown: true },
+            P28: { head: [8, 22], spine: [[14, 22], [34, 24]], lArm: [[10, 18], [6, 14]], rArm: [[10, 26], [6, 30]], lLeg: [[34, 20], [42, 16]], rLeg: [[34, 26], [42, 28]], note: 'stomach' },
+            P29: { head: [22, 22], spine: [[22, 22], [22, 22]], lArm: [[16, 22], [6, 16]], rArm: [[28, 22], [38, 16]], lLeg: [[22, 28], [16, 38]], rLeg: [[22, 28], [28, 38]], note: 'stretch', isTopDown: true },
+            P30: { head: [8, 22], spine: [[14, 22], [30, 24]], lArm: [[14, 18], [20, 16]], rArm: [[14, 26], [20, 28]], lLeg: [[30, 22], [40, 20]], rLeg: [[30, 26], [40, 28]], note: 'pillow' },
+            // Action
+            P31: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [36, 6]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'selfie' },
+            P32: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [34, 12]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'mirror' },
+            P33: { head: [24, 8], spine: [[23, 14], [22, 28]], lArm: [[17, 16], [12, 22]], rArm: [[29, 16], [34, 20]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'check' },
+            P34: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [14, 4]], rArm: [[28, 16], [30, 4]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'stretch' },
+            P35: { head: [22, 7], spine: [[22, 13], [23, 27]], lArm: [[16, 15], [8, 10]], rArm: [[28, 15], [36, 10]], lLeg: [[23, 27], [16, 40]], rLeg: [[23, 27], [30, 38]], note: 'dance' },
+            P36: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [10, 22]], rArm: [[28, 16], [34, 22]], lLeg: [[22, 28], [16, 42]], rLeg: [[22, 28], [28, 38]], note: 'walk' },
+            P37: { head: [22, 14], spine: [[22, 20], [22, 32]], lArm: [[16, 22], [10, 28]], rArm: [[28, 22], [34, 28]], lLeg: [[22, 32], [14, 40], [14, 42]], rLeg: [[22, 32], [30, 40], [30, 42]], note: 'crouch' },
+            P38: { head: [22, 4], spine: [[22, 10], [22, 24]], lArm: [[16, 12], [10, 4]], rArm: [[28, 12], [34, 4]], lLeg: [[22, 24], [16, 34]], rLeg: [[22, 24], [28, 34]], note: 'jump' },
+            P39: { head: [22, 7], spine: [[22, 13], [22, 27]], lArm: [[16, 15], [8, 12]], rArm: [[28, 15], [36, 12]], lLeg: [[22, 27], [14, 40]], rLeg: [[22, 27], [30, 40]], note: 'twirl' },
+            P40: { head: [22, 8], spine: [[22, 14], [22, 28]], lArm: [[16, 16], [12, 24]], rArm: [[28, 16], [30, 4]], lLeg: [[22, 28], [18, 42]], rLeg: [[22, 28], [26, 42]], note: 'flip' },
+        };
+
+        // ─── SVG FUNCTIONS REMOVED ───
+        // Replaced by Image-based rendering in renderVisuals()
+        // ─────────────────────────────
+
+        // ═══════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════
+        const state = {
+            pose: 'P01',
+            angle: 'A01',
+            device: 'D01',
+            mood: 'M01',
+            expression: 'E02',
+            microPose: 'MP01',
+            hairstyle: 'H01',
+            makeup: 'MK01'
+        };
+
+        // ═══════════════════════════════════════
+        // INIT
+        // ═══════════════════════════════════════
+        function init() {
+            console.log('🚀 Initializing Annie Influencer Generator...');
+
+            // Merge extended data if available
+            if (typeof POSES_EXTENDED !== 'undefined') {
+                console.log('✅ Merging POSES_EXTENDED:', POSES_EXTENDED.length, 'items');
+                POSES.push(...POSES_EXTENDED);
+            } else {
+                console.log('⚠️ POSES_EXTENDED not found');
+            }
+
+            if (typeof ANGLES_EXTENDED !== 'undefined') {
+                console.log('✅ Merging ANGLES_EXTENDED:', ANGLES_EXTENDED.length, 'items');
+                ANGLES.push(...ANGLES_EXTENDED);
+            }
+            if (typeof MOODS_EXTENDED !== 'undefined') {
+                console.log('✅ Merging MOODS_EXTENDED:', MOODS_EXTENDED.length, 'items');
+                MOODS.push(...MOODS_EXTENDED);
+            }
+            if (typeof EXPRESSIONS_EXTENDED !== 'undefined') {
+                console.log('✅ Merging EXPRESSIONS_EXTENDED:', EXPRESSIONS_EXTENDED.length, 'items');
+                EXPRESSIONS.push(...EXPRESSIONS_EXTENDED);
+            }
+            if (typeof MICRO_POSES_EXTENDED !== 'undefined') {
+                console.log('✅ Merging MICRO_POSES_EXTENDED:', MICRO_POSES_EXTENDED.length, 'items');
+                MICRO_POSES.push(...MICRO_POSES_EXTENDED);
+            }
+            if (typeof HAIRSTYLES_EXTENDED !== 'undefined') {
+                console.log('✅ Merging HAIRSTYLES_EXTENDED:', HAIRSTYLES_EXTENDED.length, 'items');
+                HAIRSTYLES.push(...HAIRSTYLES_EXTENDED);
+            }
+
+            console.log('📦 Data merged - Total counts:');
+            console.log(`   Poses: ${POSES.length}`);
+            console.log(`   Angles: ${ANGLES.length}`);
+            console.log(`   Moods: ${MOODS.length}`);
+            console.log(`   Expressions: ${EXPRESSIONS.length}`);
+            console.log(`   Micro Poses: ${MICRO_POSES.length}`);
+            console.log(`   Hairstyles: ${HAIRSTYLES.length}`);
+
+            try {
+                autoCountBadges();
+                renderAll();
+                generate();
+
+                // Scroll all grids to top to show new items
+                document.querySelectorAll('.card-grid').forEach(grid => {
+                    grid.scrollTop = 0;
+                });
+
+                console.log('✅ Init complete!');
+            } catch (e) {
+                console.error('❌ Init error:', e);
+            }
+        }
+
+        // ─── AUTO COUNT BADGES ───
+        function autoCountBadges() {
+            const counts = {
+                poseCount: POSES.length,
+                angleCount: ANGLES.length,
+                deviceCount: DEVICES.length,
+                moodCount: MOODS.length,
+                exprCount: EXPRESSIONS.length,
+                microCount: MICRO_POSES.length,
+                hairCount: HAIRSTYLES.length,
+                makeupCount: MAKEUP.length
+            };
+            for (const [id, val] of Object.entries(counts)) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val;
+            }
+        }
+
+        // ─── STAGGERED QUEUE FOR THUMBNAILS (BYPASS CLOUDFLARE RATE LIMIT) ───
+        const imageQueue = [];
+        let isProcessingQueue = false;
+
+        function processImageQueue() {
+            if (imageQueue.length === 0) {
+                isProcessingQueue = false;
+                return;
+            }
+            isProcessingQueue = true;
+            const img = imageQueue.shift();
+
+            // If it's still intersecting (hasn't scrolled far away), load it
+            if (img && img.dataset.src) {
+                img.src = img.dataset.src;
+                img.dataset.src = ''; // Mark as loaded
+            }
+            // 350ms delay perfectly bypasses Pollinations AI / Cloudflare throttle
+            setTimeout(processImageQueue, 350);
+        }
+
+        const thumbObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const img = entry.target;
+                if (entry.isIntersecting) {
+                    if (img.dataset.src && !img.dataset.queued) {
+                        img.dataset.queued = "true";
+                        imageQueue.push(img);
+                        if (!isProcessingQueue) processImageQueue();
+                    }
+                }
+            });
+        }, { rootMargin: '100px 0px' });
+
+        function renderAll() {
+            renderVisuals('poseGrid', POSES, 'pose', 'poseSearch');
+            renderVisuals('angleGrid', ANGLES, 'angle', 'angleSearch');
+            renderVisuals('deviceGrid', DEVICES, 'device', 'deviceSearch');
+            renderVisuals('moodGrid', MOODS, 'mood', 'moodSearch');
+            renderVisuals('exprGrid', EXPRESSIONS, 'expression', 'exprSearch');
+            renderVisuals('microGrid', MICRO_POSES, 'microPose', 'microSearch');
+            renderVisuals('hairGrid', HAIRSTYLES, 'hairstyle', 'hairSearch');
+            renderVisuals('makeupGrid', MAKEUP, 'makeup', 'makeupSearch');
+            updateCompatStatus();
+        }
+
+        // ─── RENDER VISUAL CARDS (Generic for All) ───
+        function renderVisuals(containerId, items, stateKey, searchInputId) {
+            const el = document.getElementById(containerId);
+            const searchVal = document.getElementById(searchInputId).value.toLowerCase();
+
+            // Debug: log first item's refImage
+            if (items.length > 0 && containerId === 'poseGrid') {
+                console.log(`📸 Rendering ${stateKey}: ${items.length} items`);
+                console.log(`   First item refImage: ${items[0].refImage || 'not set'}`);
+            }
+
+            el.innerHTML = items
+                .filter(item => !searchVal || item.name.toLowerCase().includes(searchVal))
+                .map(item => {
+                    const selected = state[stateKey] === item.id;
+                    const compat = getCompatClass(stateKey, item.id);
+                    const isHot = item.name.includes('🔥');
+                    const cleanName = item.name.replace('🔥 ', '');
+
+                    // Staggered loading: Generate simpler prompt and embed via data-src
+                    const seed = parseInt(item.id.replace(/\D/g, '')) || 42;
+                    const shortPrompt = encodeURIComponent('cinematic photo portrait of ' + cleanName);
+                    const imgSrc = `https://image.pollinations.ai/prompt/${shortPrompt}?width=300&height=400&nologo=true&seed=${seed}`;
+
+                    // Pass data attributes for the error handler, use SVG as initial placeholder
+                    const initSvg = makeSvgPlaceholder(item.id, item.prompt);
+                    return `<div class="vcard ${selected ? 'selected' : ''} ${compat}"
+                                 onclick="selectChip('${stateKey}', '${item.id}')">
+                                <div class="tooltip">${item.prompt}</div>
+                                ${isHot ? '<span class="vcard-tag tag-fire">🔥</span>' : ''}
+                                <div class="vcard-thumb">
+                                    <img src="${initSvg}" data-src="${imgSrc}" class="vcard-img lazy-thumb"
+                                         onerror="handleImgError(this, '${item.prompt.replace(/'/g, "\\'")}', '${item.id}')"
+                                         alt="${cleanName}">
+                                </div>
+                                <div class="vcard-name">${cleanName}</div>
+                            </div>`;
+                }).join('');
+
+            // Attach observer to newly rendered images
+            document.querySelectorAll(`#${containerId} .lazy-thumb`).forEach(img => {
+                thumbObserver.observe(img);
+            });
+        }
+
+        // ─── IMAGE HANDLING ───
+        const THUMB_COLORS = {
+            P: { bg: '#fef3c7', fg: '#92400e', icon: '🕺' },
+            A: { bg: '#dbeafe', fg: '#1e40af', icon: '📷' },
+            D: { bg: '#e0e7ff', fg: '#3730a3', icon: '📱' },
+            M: { bg: '#dcfce7', fg: '#166534', icon: '🌤️' },
+            E: { bg: '#fce7f3', fg: '#9d174d', icon: '😊' },
+            MP: { bg: '#f3e8ff', fg: '#6b21a8', icon: '🤌' },
+            H: { bg: '#ccfbf1', fg: '#115e59', icon: '💇' },
+            MK: { bg: '#fff1f2', fg: '#9f1239', icon: '💄' },
+            CP: { bg: '#fef9c3', fg: '#854d0e', icon: '🎭' },
+            CS: { bg: '#ede9fe', fg: '#5b21b6', icon: '🎨' },
+            SP: { bg: '#fee2e2', fg: '#991b1b', icon: '🎬' },
+        };
+
+        let svgIdCounter = 0;
+        function makeSvgPlaceholder(id, promptRaw) {
+            const uid = 'g' + (svgIdCounter++);
+            const prefix = id.replace(/[0-9]/g, '');
+            const colors = THUMB_COLORS[prefix] || THUMB_COLORS['P'];
+            const shortName = promptRaw.split(',')[0].substring(0, 20);
+            return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400">
+                <defs><linearGradient id="${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:${colors.bg};stop-opacity:1"/>
+                    <stop offset="100%" style="stop-color:white;stop-opacity:0.6"/>
+                </linearGradient></defs>
+                <rect width="300" height="400" fill="url(#${uid})" rx="16"/>
+                <text x="150" y="170" text-anchor="middle" font-size="64">${colors.icon}</text>
+                <text x="150" y="230" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="${colors.fg}">${id}</text>
+                <text x="150" y="260" text-anchor="middle" font-family="sans-serif" font-size="13" fill="${colors.fg}" opacity="0.7">${shortName}</text>
+            </svg>`);
+        }
+
+        function handleImgError(img, promptRaw, id) {
+            // Debug log
+            console.log(`🖼️ Image not found: ${img.src}`);
+            console.log(`   Using placeholder for ${id}`);
+
+            // If regular loaded image fails, keep the SVG
+            img.onerror = function () {
+                img.onerror = null;
+                img.src = makeSvgPlaceholder(id, promptRaw);
+                img.style.objectFit = 'cover';
+            };
+
+            // Because we already use explicit delay queues, we skip secondary Pollination fallbacks
+            // to avoid getting IP-banned immediately if the first API hit failed.
+            img.src = makeSvgPlaceholder(id, promptRaw);
+        }
+
+        // ─── COMPATIBILITY ───
+        function getCompatClass(stateKey, itemId) {
+            if (stateKey === 'angle') {
+                if (!isAngleCompatible(state.pose, itemId)) return 'incompatible';
+                if (!isDeviceAngleCompatible(state.device, itemId)) return 'incompatible';
+                if (!isHairAngleCompatible(state.hairstyle, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'expression') {
+                if (!isExpressionCompatible(state.mood, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'mood') {
+                if (!isMoodCompatible(state.device, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'microPose') {
+                if (!isPoseMicroCompatible(state.pose, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'makeup') {
+                if (!isMoodMakeupCompatible(state.mood, itemId)) return 'incompatible';
+            }
+            return '';
+        }
+
+        function updateCompatStatus() {
+            setCompat('angleCompat', isAngleCompatible(state.pose, state.angle) && isDeviceAngleCompatible(state.device, state.angle) && isHairAngleCompatible(state.hairstyle, state.angle), 'Pose+Device+Hair ↔ Angle');
+            setCompat('exprCompat', isExpressionCompatible(state.mood, state.expression), 'Mood ↔ Expression');
+            setCompat('moodCompat', isMoodCompatible(state.device, state.mood), 'Device ↔ Mood');
+        }
+
+        function setCompat(elId, ok, label) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            el.className = 'compat-status show ' + (ok ? 'good' : 'warn');
+            el.textContent = ok ? `✅ ${label}: Compatible` : `⚠️ ${label}: May not match well`;
+        }
+
+        // ─── SELECT ───
+        function selectChip(key, id) {
+            state[key] = id;
+            renderAll();
+            generate();
+        }
+
+        // ─── FILTER ───
+        function filterCards(type) {
+            const map = {
+                pose: ['poseGrid', POSES, 'pose', 'poseSearch'],
+                angle: ['angleGrid', ANGLES, 'angle', 'angleSearch'],
+                device: ['deviceGrid', DEVICES, 'device', 'deviceSearch'],
+                mood: ['moodGrid', MOODS, 'mood', 'moodSearch'],
+                expr: ['exprGrid', EXPRESSIONS, 'expression', 'exprSearch'],
+                micro: ['microGrid', MICRO_POSES, 'microPose', 'microSearch'],
+                hair: ['hairGrid', HAIRSTYLES, 'hairstyle', 'hairSearch'],
+                makeup: ['makeupGrid', MAKEUP, 'makeup', 'makeupSearch']
+            };
+            const [cId, items, sKey, searchId] = map[type];
+            renderVisuals(cId, items, sKey, searchId);
+        }
+
+        // ─── RANDOMIZE ───
+        function randomize() {
+            const rnd = arr => arr[Math.floor(Math.random() * arr.length)].id;
+            state.pose = rnd(POSES);
+            state.angle = rnd(ANGLES);
+            state.device = rnd(DEVICES);
+            state.mood = rnd(MOODS);
+            state.expression = rnd(EXPRESSIONS);
+            state.microPose = rnd(MICRO_POSES);
+            state.hairstyle = rnd(HAIRSTYLES);
+            state.makeup = rnd(MAKEUP);
+            renderAll();
+            generate();
+        }
+
+        // ═══════════════════════════════════════
+        // GENERATE PROMPT
+        // ═══════════════════════════════════════
+        function generate() {
+            const pose = POSES.find(p => p.id === state.pose);
+            const angle = ANGLES.find(a => a.id === state.angle);
+            const device = DEVICES.find(d => d.id === state.device);
+            const mood = MOODS.find(m => m.id === state.mood);
+            const expr = EXPRESSIONS.find(e => e.id === state.expression);
+            const micro = MICRO_POSES.find(m => m.id === state.microPose);
+            const hair = HAIRSTYLES.find(h => h.id === state.hairstyle);
+            const mkup = MAKEUP.find(m => m.id === state.makeup);
+
+            const prompt = `Generate an ultra-realistic smartphone photo.
+
+FACE:
+Use attached 3×3 face reference.
+Expression: ${expr ? expr.prompt : 'neutral'}.
+Face geometry must not change.
+
+MAKEUP:
+${mkup ? mkup.prompt : 'no makeup makeup look, natural fresh'}.
+
+HAIRSTYLE:
+${hair ? hair.prompt : 'natural hair'}.
+
+BODY & POSE:
+${pose ? pose.prompt : 'natural pose'}.
+Natural adult female anatomy, slim with hourglass shape.
+Bust must be soft, weighted, full, perfectly round, and naturally prominent.
+Cleavage must be clearly visible, full, round, firm, and prominently protruding.
+Do NOT flatten, reduce, or minimize the bust — maintain full volume at all angles.
+
+MICRO POSE:
+${micro ? micro.prompt : 'natural hand position'}.
+
+OUTFIT:
+Keep outfit EXACTLY as shown in the uploaded reference image.
+Do NOT change, redesign, or censor the outfit.
+Cleavage visibility follows outfit cut.
+Fabric reacts naturally to pose and gravity.
+
+BACKGROUND:
+Keep background EXACTLY as shown in the uploaded reference image.
+No pasted look, natural shadows matching environment.
+Subject matches scale and perspective of the scene.
+
+CAMERA:
+${angle ? angle.prompt : 'eye level medium shot'}.
+${device ? device.prompt : 'iPhone 17 Pro Max, 24mm'}.
+
+MOOD & LIGHTING:
+${mood ? mood.prompt : 'natural ambient'}.
+Natural ambient lighting, global illumination.
+No studio lighting, no harsh flash.
+
+Quality: Ultra-clear, no blur, no noise, RAW photo realism.
+
+IMAGE FORMAT:
+Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
+
+            document.getElementById('outImage').innerText = prompt;
+            document.getElementById('outNegative').innerText = GLOBAL_NEGATIVE;
+
+            // ─── VIDEO MOTION (Motion Only) ───
+            const vm = getVideoMotion(state.pose, state.microPose);
+            let videoPrompt = `BODY MOTION:
+${vm.motion}.
+
+MICRO MOTION:
+${vm.micro ? vm.micro + '.' : (micro ? micro.prompt + ', animated subtly.' : 'natural idle micro-movement.')}  
+
+FACE:
+Subtle ${expr ? expr.prompt : 'neutral'} micro-expression shift.
+Natural blink rhythm. Breathing visible.
+Face must stay IDENTICAL — no drift, no morphing.
+
+HAIR MOTION:
+${hair ? hair.prompt : 'natural hair'}, reacting to movement — subtle sway, bounce, wind effect.`;
+
+            document.getElementById('outVideo').innerText = videoPrompt;
+            document.getElementById('outVideoNeg').innerText = VIDEO_NEGATIVE;
+
+            // Update Prompt DNA
+            updateDNA();
+        }
+
+        // ═══════════════════════════════════════
+        // COPY FUNCTIONS
+        // ═══════════════════════════════════════
+        function copySystem() {
+            navigator.clipboard.writeText(SYSTEM_PROMPT).then(() => {
+                event.target.textContent = '✅ Copied!';
+                setTimeout(() => { event.target.textContent = '📋 Copy System'; }, 2000);
+            });
+        }
+
+        function copyPrompt() {
+            const p = document.getElementById('outImage').innerText;
+            const n = document.getElementById('outNegative').innerText;
+            const all = `${p}\n\n---\nNEGATIVE:\n${n}`;
+            navigator.clipboard.writeText(all).then(() => {
+                event.target.textContent = '✅ Copied!';
+                setTimeout(() => { event.target.textContent = '📋 Copy Image'; }, 2000);
+            });
+        }
+
+        function copyVideo() {
+            const v = document.getElementById('outVideo').innerText;
+            const vn = document.getElementById('outVideoNeg').innerText;
+            const all = `${v}\n\n---\nVIDEO NEGATIVE:\n${vn}`;
+            navigator.clipboard.writeText(all).then(() => {
+                event.target.textContent = '✅ Copied!';
+                setTimeout(() => { event.target.textContent = '📋 Copy Video'; }, 2000);
+            });
+        }
+
+        // ═══════════════════════════════════════
+        // 🎭 PERSONA PRESETS
+        // ═══════════════════════════════════════
+        const PERSONAS = {
+            girlNextDoor: {
+                label: '🏡 Girl Next Door',
+                pose: 'P01', angle: 'A01', device: 'D01', mood: 'M01',
+                expression: 'E02', microPose: 'MP02', hairstyle: 'H01', makeup: 'MK01'
+            },
+            bossBabe: {
+                label: '💼 Boss Babe',
+                pose: 'P02', angle: 'A18', device: 'D08', mood: 'M19',
+                expression: 'E09', microPose: 'MP05', hairstyle: 'H02', makeup: 'MK04'
+            },
+            aesthetic: {
+                label: '✨ Aesthetic Princess',
+                pose: 'P04', angle: 'A13', device: 'D15', mood: 'M13',
+                expression: 'E10', microPose: 'MP01', hairstyle: 'H05', makeup: 'MK02'
+            },
+            sporty: {
+                label: '🏃 Sporty Casual',
+                pose: 'P34', angle: 'A03', device: 'D13', mood: 'M02',
+                expression: 'E03', microPose: 'MP10', hairstyle: 'H10', makeup: 'MK01'
+            },
+            nightOut: {
+                label: '🌙 Night Out Glam',
+                pose: 'P03', angle: 'A02', device: 'D01', mood: 'M10',
+                expression: 'E11', microPose: 'MP03', hairstyle: 'H03', makeup: 'MK06'
+            }
+        };
+
+        function applyPersona(key) {
+            const p = PERSONAS[key];
+            if (!p) return;
+            state.pose = p.pose;
+            state.angle = p.angle;
+            state.device = p.device;
+            state.mood = p.mood;
+            state.expression = p.expression;
+            state.microPose = p.microPose;
+            state.hairstyle = p.hairstyle;
+            state.makeup = p.makeup;
+
+            // Visual feedback on persona buttons
+            document.querySelectorAll('#personaBar button').forEach(btn => {
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+            });
+            event.target.style.background = 'var(--accent)';
+            event.target.style.color = 'var(--accent-text)';
+            event.target.style.borderColor = 'var(--accent)';
+
+            renderAll();
+            generate();
+        }
+
+        // ═══════════════════════════════════════
+        // 🧬 PROMPT DNA
+        // ═══════════════════════════════════════
+        function encodeDNA() {
+            return `${state.pose}-${state.angle}-${state.device}-${state.mood}-${state.expression}-${state.microPose}-${state.hairstyle}-${state.makeup}`;
+        }
+
+        function decodeDNA(code) {
+            const parts = code.trim().replace(/^#/, '').split('-');
+            if (parts.length !== 8) return false;
+            const keys = ['pose', 'angle', 'device', 'mood', 'expression', 'microPose', 'hairstyle', 'makeup'];
+            const arrays = [POSES, ANGLES, DEVICES, MOODS, EXPRESSIONS, MICRO_POSES, HAIRSTYLES, MAKEUP];
+            for (let i = 0; i < 8; i++) {
+                if (!arrays[i].find(item => item.id === parts[i])) return false;
+            }
+            keys.forEach((k, i) => state[k] = parts[i]);
+            return true;
+        }
+
+        function updateDNA() {
+            const el = document.getElementById('dnaCode');
+            if (el) el.value = '#' + encodeDNA();
+        }
+
+        function copyDNA() {
+            const code = document.getElementById('dnaCode').value;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                btn.textContent = '✅';
+                setTimeout(() => { btn.textContent = '📋'; }, 1500);
+            });
+        }
+
+        function loadDNA() {
+            const input = document.getElementById('dnaInput').value;
+            if (decodeDNA(input)) {
+                renderAll();
+                generate();
+                document.getElementById('dnaInput').value = '';
+                document.getElementById('dnaInput').placeholder = '✅ Loaded!';
+                setTimeout(() => {
+                    document.getElementById('dnaInput').placeholder = 'Paste DNA code to load...';
+                }, 2000);
+            } else {
+                document.getElementById('dnaInput').placeholder = '❌ Invalid DNA code';
+                document.getElementById('dnaInput').value = '';
+                setTimeout(() => {
+                    document.getElementById('dnaInput').placeholder = 'Paste DNA code to load...';
+                }, 2000);
+            }
+        }
+
+        // ═══════════════════════════════════════
+        // ⏰ REAL-TIME MOOD MATCHER
+        // ═══════════════════════════════════════
+        const MOOD_TIME_MAP = {
+            // hour ranges [start, end] -> mood IDs
+            earlyMorning: { range: [5, 7], moods: ['M01', 'M15'], label: '🌅 Early Morning (5-7)' },
+            morning: { range: [7, 10], moods: ['M01', 'M02', 'M15'], label: '☀️ Morning (7-10)' },
+            midday: { range: [10, 14], moods: ['M02', 'M03', 'M16', 'M21'], label: '☀️ Midday (10-14)' },
+            afternoon: { range: [14, 17], moods: ['M04', 'M05', 'M17', 'M18'], label: '🌤️ Afternoon (14-17)' },
+            goldenHour: { range: [17, 19], moods: ['M05', 'M06', 'M22'], label: '🌅 Golden Hour (17-19)' },
+            blueHour: { range: [19, 20], moods: ['M07', 'M09'], label: '🌃 Blue Hour (19-20)' },
+            evening: { range: [20, 23], moods: ['M08', 'M10', 'M12', 'M13', 'M14'], label: '🌙 Evening (20-23)' },
+            lateNight: { range: [23, 5], moods: ['M10', 'M11', 'M14', 'M20'], label: '🌃 Late Night (23-5)' }
+        };
+
+        function matchMoodToTime() {
+            const hour = new Date().getHours();
+            let matched = MOOD_TIME_MAP.lateNight; // default
+
+            for (const [key, slot] of Object.entries(MOOD_TIME_MAP)) {
+                const [start, end] = slot.range;
+                if (start < end) {
+                    if (hour >= start && hour < end) { matched = slot; break; }
+                } else {
+                    if (hour >= start || hour < end) { matched = slot; break; }
+                }
+            }
+
+            // Pick a random mood from the matched time slot
+            const moodId = matched.moods[Math.floor(Math.random() * matched.moods.length)];
+            state.mood = moodId;
+
+            const moodName = MOODS.find(m => m.id === moodId)?.name || moodId;
+            const btn = event.target;
+            btn.textContent = `✅ ${matched.label} → ${moodName}`;
+            setTimeout(() => { btn.textContent = '⏰ Match Time'; }, 3000);
+
+            renderAll();
+            generate();
+        }
+
+        // Auto-init on page load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('🍌 [PWA] Service Worker registered!', reg.scope))
+                    .catch(err => console.warn('🍌 [PWA] SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

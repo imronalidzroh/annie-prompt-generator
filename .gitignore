@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Temp files
+generate_thumbs.py
+*.pyc
+__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Model Lock (private reference — do not publish)
+MODEL LOCK/
+
+# Reference images (too large for GitHub)
+referensi/

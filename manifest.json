@@ -1,0 +1,24 @@
+{
+    "name": "Annie — Nano Banana Prompt Generator",
+    "short_name": "Annie",
+    "description": "AI Influencer Prompt Generator for ultra-realistic photo & video prompts",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#ec4899",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "productivity",
+        "utilities"
+    ],
+    "lang": "id",
+    "dir": "ltr"
+}

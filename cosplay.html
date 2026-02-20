@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Annie — Cosplay Anime Generator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Annie">
+    <link rel="apple-touch-icon" href="icons/icon-512.png">
+    <meta name="description" content="Annie Cosplay Anime Generator — ultra-realistic cosplay photo prompts">
+</head>
+
+<body>
+    <!-- Premium Aurora Background -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>🎭 Annie — Cosplay Anime Generator</h1>
+            <div class="sub">Anime Cosplay • Face Merge • Gemini Nano Banana v5.3</div>
+            <a class="nav-link" href="index.html">← Back to Annie Influencer</a>
+        </header>
+
+        <div class="main-layout">
+            <!-- LEFT: Inputs -->
+            <div class="left-col">
+
+                <!-- 🔒 LOCKED: Face Reference -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">🧑 Face Reference</div>
+                        <span class="badge badge-lock">🔒 Upload Required</span>
+                    </div>
+                    <div class="lock-text">Upload your real face reference (3×3 grid recommended).
+                        Face geometry is ABSOLUTELY LOCKED — expression changes only from selection below.</div>
+                </div>
+
+                <!-- 🔒 LOCKED: Character Reference -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">🎭 Character Reference</div>
+                        <span class="badge badge-lock">🖼️ Upload Required</span>
+                    </div>
+                    <div class="lock-text">Upload your target anime/game character image.
+                        Costume, accessories, hair color & style will be taken EXACTLY from this reference. Do NOT
+                        alter.</div>
+                </div>
+
+                <!-- 🔒 LOCKED: Background -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">🌄 Background</div>
+                        <span class="badge badge-lock">🖼️ Upload Required</span>
+                    </div>
+                    <div class="lock-text">Upload your scene/background image.
+                        Subject will be integrated naturally — matching scale, perspective, shadows, and color
+                        temperature.</div>
+                </div>
+
+                <!-- 🔒 LOCKED: Makeup (Follows Character) -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">💄 Makeup</div>
+                        <span class="badge badge-lock">🔒 Follows Character</span>
+                    </div>
+                    <div class="lock-text">Makeup is LOCKED to the cosplay character reference.
+                        Eye makeup, lip color, blush, and all beauty details will be replicated EXACTLY from the
+                        anime/game character — adapted to real cosmetics on real skin.</div>
+                </div>
+
+                <!-- SELECTABLE: Scene Preset -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">🎬 Scene Preset</div>
+                        <div><span class="badge">Select</span> <span class="badge" id="presetCount">5</span></div>
+                    </div>
+                    <input type="text" class="search-input" id="presetSearch" placeholder="🔍 Search preset..."
+                        oninput="filterCards('preset')">
+                    <div class="card-grid" id="presetGrid"></div>
+                </div>
+
+
+                <div id="poseSection">
+                    <!-- SELECTABLE: Pose -->
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">🕺 Pose</div>
+                            <div><span class="badge">Select</span> <span class="badge" id="poseCount">50</span></div>
+                        </div>
+                        <input type="text" class="search-input" id="poseSearch" placeholder="🔍 Search pose..."
+                            oninput="filterCards('pose')">
+                        <div class="card-grid" id="poseGrid"></div>
+                        <div class="compat-status" id="poseCompat"></div>
+                    </div>
+                </div>
+
+                <div id="angleSection">
+                    <!-- SELECTABLE: Camera Angle -->
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">📐 Camera Angle</div>
+                            <div><span class="badge">Select</span> <span class="badge" id="angleCount">40</span></div>
+                        </div>
+                        <input type="text" class="search-input" id="angleSearch" placeholder="🔍 Search angle..."
+                            oninput="filterCards('angle')">
+                        <div class="card-grid" id="angleGrid"></div>
+                        <div class="compat-status" id="angleCompat"></div>
+                    </div>
+                </div>
+
+                <div id="deviceSection">
+                    <!-- SELECTABLE: Camera Device -->
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">📱 Camera Type</div>
+                            <div><span class="badge">Select</span> <span class="badge" id="deviceCount">22</span></div>
+                        </div>
+                        <input type="text" class="search-input" id="deviceSearch" placeholder="🔍 Search camera..."
+                            oninput="filterCards('device')">
+                        <div class="card-grid" id="deviceGrid"></div>
+                    </div>
+                </div>
+
+                <div id="exprSection">
+                    <!-- SELECTABLE: Expression -->
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">😊 Expression</div>
+                            <div><span class="badge">Select</span> <span class="badge" id="exprCount">22</span></div>
+                        </div>
+                        <input type="text" class="search-input" id="exprSearch" placeholder="🔍 Search expression..."
+                            oninput="filterCards('expr')">
+                        <div class="card-grid" id="exprGrid"></div>
+                        <div class="compat-status" id="exprCompat"></div>
+                    </div>
+                </div>
+
+                <div id="moodSection">
+                    <!-- SELECTABLE: Mood / Lighting -->
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">💡 Mood / Lighting</div>
+                            <div><span class="badge">Select</span> <span class="badge" id="moodCount">23</span></div>
+                        </div>
+                        <input type="text" class="search-input" id="moodSearch" placeholder="🔍 Search mood..."
+                            oninput="filterCards('mood')">
+                        <div class="card-grid" id="moodGrid"></div>
+                        <div class="compat-status" id="moodCompat"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: Output -->
+            <div class="right-col">
+                <div class="out-card">
+                    <div class="out-section">
+                        <span class="out-label sys">🎭 COSPLAY SYSTEM PROMPT</span>
+                        <span style="font-size:0.65rem;color:var(--text-muted);margin-left:6px;">Copas 1× ke Nano</span>
+                        <button class="btn btn-sys"
+                            style="float:right;padding:5px 10px;font-size:0.65rem;flex:none;width:auto;"
+                            onclick="copySystem()">📋 Copy System</button>
+                    </div>
+
+                    <hr class="sep">
+
+                    <div class="out-section">
+                        <span class="out-label img">🎭 COSPLAY PROMPT</span>
+                        <div class="out-box" id="outImage">Select options to generate...</div>
+                    </div>
+
+                    <div class="out-section">
+                        <span class="out-label neg">🚫 NEGATIVE PROMPT</span>
+                        <div class="out-box" id="outNegative">...</div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn-ghost" onclick="randomize()">🎲 Random</button>
+                        <button class="btn btn-banana" onclick="copyPrompt()">📋 Copy Prompt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="data-extension.js"></script>
+    <script>
+        // ═══════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════
+        const state = {
+            scenePreset: 'SPR01',
+            pose: 'CP00',
+            angle: 'A01',
+            device: 'D01',
+            expression: 'E01',
+            mood: 'M00'
+        };
+
+        // Combined poses: Follow Character Pose first, then all standard poses
+        // Initialized as empty — populated in init() after extensions are merged
+        let ALL_COSPLAY_POSES = [];
+
+        // ═══════════════════════════════════════
+        // INIT & RENDER
+        // ═══════════════════════════════════════
+        function init() {
+            // Merge extended data if available (same as index.html)
+            if (typeof POSES_EXTENDED !== 'undefined') POSES.push(...POSES_EXTENDED);
+            if (typeof ANGLES_EXTENDED !== 'undefined') ANGLES.push(...ANGLES_EXTENDED);
+            if (typeof MOODS_EXTENDED !== 'undefined') MOODS.push(...MOODS_EXTENDED);
+            if (typeof EXPRESSIONS_EXTENDED !== 'undefined') EXPRESSIONS.push(...EXPRESSIONS_EXTENDED);
+            if (typeof MICRO_POSES_EXTENDED !== 'undefined') MICRO_POSES.push(...MICRO_POSES_EXTENDED);
+            if (typeof HAIRSTYLES_EXTENDED !== 'undefined') HAIRSTYLES.push(...HAIRSTYLES_EXTENDED);
+
+            console.log('📦 [Cosplay] Data merged - Total counts:');
+            console.log(`   Poses: ${POSES.length}`);
+            console.log(`   Angles: ${ANGLES.length}`);
+            console.log(`   Moods: ${MOODS.length}`);
+            console.log(`   Expressions: ${EXPRESSIONS.length}`);
+            console.log(`   Micro Poses: ${MICRO_POSES.length}`);
+            console.log(`   Hairstyles: ${HAIRSTYLES.length}`);
+
+            // Build ALL_COSPLAY_POSES after extensions are merged
+            ALL_COSPLAY_POSES = [COSPLAY_EXTRA_POSE, ...POSES];
+            console.log(`   ALL_COSPLAY_POSES: ${ALL_COSPLAY_POSES.length}`);
+
+            // Update badge counts
+            const badgeMap = {
+                presetCount: COSPLAY_PRESETS.length,
+                poseCount: ALL_COSPLAY_POSES.length,
+                angleCount: ANGLES.length,
+                deviceCount: DEVICES.length,
+                exprCount: EXPRESSIONS.length,
+                moodCount: MOODS.length
+            };
+            Object.entries(badgeMap).forEach(([id, count]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = count;
+            });
+
+            renderAll();
+            generate();
+        }
+
+        // ─── STAGGERED QUEUE FOR THUMBNAILS (BYPASS CLOUDFLARE RATE LIMIT) ───
+        const imageQueue = [];
+        let isProcessingQueue = false;
+
+        function processImageQueue() {
+            if (imageQueue.length === 0) {
+                isProcessingQueue = false;
+                return;
+            }
+            isProcessingQueue = true;
+            const img = imageQueue.shift();
+
+            if (img && img.dataset.src) {
+                img.src = img.dataset.src;
+                img.dataset.src = '';
+            }
+            setTimeout(processImageQueue, 350);
+        }
+
+        const thumbObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const img = entry.target;
+                if (entry.isIntersecting) {
+                    if (img.dataset.src && !img.dataset.queued) {
+                        img.dataset.queued = "true";
+                        imageQueue.push(img);
+                        if (!isProcessingQueue) processImageQueue();
+                    }
+                }
+            });
+        }, { rootMargin: '100px 0px' });
+
+        function renderAll() {
+            const isNormal = state.scenePreset === 'SPR01';
+            const sections = ['poseSection', 'angleSection', 'deviceSection', 'exprSection', 'moodSection'];
+
+            // Toggle section lock based on preset
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (isNormal) {
+                        el.classList.remove('section-locked');
+                    } else {
+                        el.classList.add('section-locked');
+                    }
+                }
+            });
+
+            renderVisuals('presetGrid', COSPLAY_PRESETS, 'scenePreset', 'presetSearch');
+            if (isNormal) {
+                renderVisuals('poseGrid', ALL_COSPLAY_POSES, 'pose', 'poseSearch');
+                renderVisuals('angleGrid', ANGLES, 'angle', 'angleSearch');
+                renderVisuals('deviceGrid', DEVICES, 'device', 'deviceSearch');
+                renderVisuals('exprGrid', EXPRESSIONS, 'expression', 'exprSearch');
+                renderVisuals('moodGrid', MOODS, 'mood', 'moodSearch');
+                updateCompatStatus();
+            }
+        }
+
+        // ─── RENDER VISUAL CARDS ───
+        function renderVisuals(containerId, items, stateKey, searchInputId) {
+            const el = document.getElementById(containerId);
+            const searchEl = document.getElementById(searchInputId);
+            const searchVal = searchEl ? searchEl.value.toLowerCase() : '';
+
+            el.innerHTML = items
+                .filter(item => !searchVal || item.name.toLowerCase().includes(searchVal))
+                .map(item => {
+                    const selected = state[stateKey] === item.id;
+                    const compat = getCompatClass(stateKey, item.id);
+                    const isHot = item.name.includes('🔥');
+                    const cleanName = item.name.replace('🔥 ', '');
+                    // Staggered loading: Generate simpler prompt and embed via data-src
+                    const seed = parseInt(item.id.replace(/\D/g, '')) || 42;
+                    const shortPrompt = encodeURIComponent('cinematic cosplay portrait photo of ' + cleanName);
+                    const imgSrc = `https://image.pollinations.ai/prompt/${shortPrompt}?width=300&height=400&nologo=true&seed=${seed}`;
+
+                    // Pass data attributes for the error handler, use SVG as initial placeholder
+                    const initSvg = makeSvgPlaceholder(item.id, item.prompt);
+                    return `<div class="vcard ${selected ? 'selected' : ''} ${compat}"
+                                 onclick="selectChip('${stateKey}', '${item.id}')">
+                                <div class="tooltip">${item.prompt}</div>
+                                ${isHot ? '<span class="vcard-tag tag-fire">🔥</span>' : ''}
+                                <div class="vcard-thumb">
+                                    <img src="${initSvg}" data-src="${imgSrc}" class="vcard-img lazy-thumb"
+                                         onerror="handleImgError(this, '${item.prompt.replace(/'/g, "\\'")}', '${item.id}')"
+                                         alt="${cleanName}">
+                                </div>
+                                <div class="vcard-name">${cleanName}</div>
+                            </div>`;
+                }).join('');
+
+            // Attach observer to newly rendered images
+            document.querySelectorAll(`#${containerId} .lazy-thumb`).forEach(img => {
+                thumbObserver.observe(img);
+            });
+        }
+
+        // ─── IMAGE HANDLING ───
+        const THUMB_COLORS = {
+            P: { bg: '#fef3c7', fg: '#92400e', icon: '🕺' },
+            A: { bg: '#dbeafe', fg: '#1e40af', icon: '📷' },
+            D: { bg: '#e0e7ff', fg: '#3730a3', icon: '📱' },
+            M: { bg: '#dcfce7', fg: '#166534', icon: '🌤️' },
+            E: { bg: '#fce7f3', fg: '#9d174d', icon: '😊' },
+            MP: { bg: '#f3e8ff', fg: '#6b21a8', icon: '🤌' },
+            H: { bg: '#ccfbf1', fg: '#115e59', icon: '💇' },
+            MK: { bg: '#fff1f2', fg: '#9f1239', icon: '💄' },
+            CP: { bg: '#fef9c3', fg: '#854d0e', icon: '🎭' },
+            CS: { bg: '#ede9fe', fg: '#5b21b6', icon: '🎨' },
+            SP: { bg: '#fee2e2', fg: '#991b1b', icon: '🎬' },
+        };
+
+        let svgIdCounter = 0;
+        function makeSvgPlaceholder(id, promptRaw) {
+            const uid = 'g' + (svgIdCounter++);
+            const prefix = id.replace(/[0-9]/g, '');
+            const colors = THUMB_COLORS[prefix] || THUMB_COLORS['P'];
+            const shortName = promptRaw.split(',')[0].substring(0, 20);
+            return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400">
+                <defs><linearGradient id="${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:${colors.bg};stop-opacity:1"/>
+                    <stop offset="100%" style="stop-color:white;stop-opacity:0.6"/>
+                </linearGradient></defs>
+                <rect width="300" height="400" fill="url(#${uid})" rx="16"/>
+                <text x="150" y="170" text-anchor="middle" font-size="64">${colors.icon}</text>
+                <text x="150" y="230" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="${colors.fg}">${id}</text>
+                <text x="150" y="260" text-anchor="middle" font-family="sans-serif" font-size="13" fill="${colors.fg}" opacity="0.7">${shortName}</text>
+            </svg>`);
+        }
+
+        function handleImgError(img, promptRaw, id) {
+            // Final fallback: SVG placeholder (guaranteed offline)
+            img.onerror = function () {
+                img.onerror = null;
+                img.src = makeSvgPlaceholder(id, promptRaw);
+                img.style.objectFit = 'cover';
+            };
+
+            // Primary fallback: Pollinations AI (Clean URL)
+            const safePrompt = encodeURIComponent('photorealistic cosplay, ' + promptRaw + ', high quality, detailed');
+            img.src = `https://image.pollinations.ai/prompt/${safePrompt}`;
+        }
+
+        // ─── COMPATIBILITY ───
+        function getCompatClass(stateKey, itemId) {
+            if (stateKey === 'angle') {
+                if (!isAngleCompatible(state.pose, itemId)) return 'incompatible';
+                if (!isDeviceAngleCompatible(state.device, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'expression') {
+                if (!isExpressionCompatible(state.mood, itemId)) return 'incompatible';
+            }
+            if (stateKey === 'mood') {
+                if (!isMoodCompatible(state.device, itemId)) return 'incompatible';
+            }
+            return '';
+        }
+
+        function updateCompatStatus() {
+            setCompat('angleCompat', isAngleCompatible(state.pose, state.angle) && isDeviceAngleCompatible(state.device, state.angle), 'Pose+Device ↔ Angle');
+            setCompat('exprCompat', isExpressionCompatible(state.mood, state.expression), 'Mood ↔ Expression');
+        }
+
+        function setCompat(elId, ok, label) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            el.className = 'compat-status show ' + (ok ? 'good' : 'warn');
+            el.textContent = ok ? `✅ ${label}: Compatible` : `⚠️ ${label}: May not match well`;
+        }
+
+        // ─── SELECT ───
+        function selectChip(key, id) {
+            state[key] = id;
+            renderAll();
+            generate();
+        }
+
+        // ─── FILTER ───
+        function filterCards(type) {
+            const map = {
+                preset: ['presetGrid', COSPLAY_PRESETS, 'scenePreset', 'presetSearch'],
+                pose: ['poseGrid', ALL_COSPLAY_POSES, 'pose', 'poseSearch'],
+                angle: ['angleGrid', ANGLES, 'angle', 'angleSearch'],
+                device: ['deviceGrid', DEVICES, 'device', 'deviceSearch'],
+                expr: ['exprGrid', EXPRESSIONS, 'expression', 'exprSearch'],
+                mood: ['moodGrid', MOODS, 'mood', 'moodSearch']
+            };
+            const [cId, items, sKey, searchId] = map[type];
+            renderVisuals(cId, items, sKey, searchId);
+        }
+
+        // ─── RANDOMIZE ───
+        function randomize() {
+            const rnd = arr => arr[Math.floor(Math.random() * arr.length)].id;
+            state.scenePreset = rnd(COSPLAY_PRESETS);
+            state.pose = rnd(ALL_COSPLAY_POSES);
+            state.angle = rnd(ANGLES);
+            state.device = rnd(DEVICES);
+            state.expression = rnd(EXPRESSIONS);
+            state.mood = rnd(MOODS);
+            renderAll();
+            generate();
+        }
+
+        // ═══════════════════════════════════════
+        // GENERATE PROMPT
+        // ═══════════════════════════════════════
+        function generate() {
+            const preset = COSPLAY_PRESETS.find(p => p.id === state.scenePreset);
+            const isNormal = state.scenePreset === 'SPR01';
+
+            const cosplayNegative = "anime, manga, illustration, 2D, cel-shading, flat coloring, bold outlines, cartoon, digital art, painted look, airbrushed skin, smooth skin without pores, line art, comic style, face morphing, different face, wrong costume, simplified costume, western features, exaggerated body, CGI artifacts, low quality, noise, deformed hands, extra fingers, pasted background, blurry face, blurry body, soft focus on subject, out of focus subject, motion blur on face";
+
+            if (state.scenePreset === 'SPR02') {
+                // SILHOUETTE SHADOW: Full Ambient Follow Mode — no person visible
+                const shadowPrompt = `Generate an ultra-realistic smartphone photo taken from a POV ANGLE (Point of View) looking down at the floor.
+
+HUMAN VISIBILITY:
+No visible person in the frame.
+No face. No head. No body. No skin.
+Only a realistic human shadow visible on the floor extending forward.
+
+COMPOSITION & PROPS:
+In the immediate foreground (bottom edge of the photo), a pile of the cosplay costume is visible.
+The costume (wig, dress, props) is heaped together messily at the bottom of the frame, as if just taken off.
+The rest of the floor stretches out empty in front of the costume pile.
+The texture of the floor tiles/surface is clearly visible.
+
+SHADOW:
+A sharp, clear human shadow is cast onto the empty floor space in the center/middle of the frame.
+The shadow extends from the bottom (off-camera person) forward across the floor.
+The shadow silhouette shows a curvy feminine figure with a confident hand-on-hip pose.
+The shadow outline is crisp and well-defined (hard light source).
+Naturally visible bust silhouette on the shadow.
+
+LIGHTING RULE:
+The shadow must strictly follow the ambient lighting present in the background.
+If the background is night, the shadow must reflect low-light softness.
+If the background is daylight, the shadow must reflect natural daylight direction.
+If the background lighting is soft, shadow edges must be soft.
+If lighting is strong, shadow contrast must match naturally.
+
+CAMERA:
+Real smartphone photography.
+High angle shot looking down-forward.
+Natural exposure.
+No dramatic grading.
+
+STYLE:
+Photorealistic.
+Candid snap of a cosplay aftermath.
+Real-world environment.
+Physically accurate light behavior.
+No stylization. No CGI. No anime.
+
+If the shadow does not align with the existing light direction in the background, regenerate.
+
+IMAGE FORMAT:
+Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
+
+                const shadowNegative = "person visible, face visible, head visible, body visible, skin visible, extra lighting, spotlight, studio light, cinematic lighting, exaggerated shadow, horror mood, artificial glow, CGI, anime, 3D render, illustration, doll, figurine, miniature";
+
+                document.getElementById('outImage').innerText = shadowPrompt;
+                document.getElementById('outNegative').innerText = shadowNegative;
+                return;
+            }
+
+            if (!isNormal) {
+                // OTHER PRESETS: Use preset composition + face/character/background
+                const prompt = `PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
+
+SCENE COMPOSITION:
+${preset ? preset.prompt : 'artistic cosplay composition'}.
+Follow this composition direction EXACTLY.
+
+IMPORTANT — the anime character image is a COSTUME REFERENCE ONLY.
+Do NOT replicate its art style. Render everything as a REAL PHOTOGRAPH.
+
+FACE (HIGHEST PRIORITY — NON-NEGOTIABLE):
+Use the 3×3 face grid as the ONLY face source. This is a REAL person.
+Face geometry ABSOLUTELY LOCKED — jawline shape, nose bridge, eye spacing, lip shape, cheekbones, forehead, face width, chin must ALL be IDENTICAL to the face reference.
+The result MUST be recognizable as the EXACT same person from the reference. If not, the output is REJECTED.
+Eye shape and eyelid type: LOCKED from reference. Do NOT change to double eyelid or enlarge eyes.
+Skin tone and texture: LOCKED from reference. Real skin with visible pores.
+No beautification. No morphing. No slimming. No smoothing. No Korean/Chinese beauty filter.
+Do NOT let the anime character's face influence the output face in any way.
+
+BODY SHAPE:
+Slim body with full, round, naturally prominent bust.
+Cleavage must be visibly full, round, and prominent when costume allows.
+Do NOT flatten or reduce the bust. Maintain curvy yet slim proportions.
+
+COSTUME (from character reference):
+Recreate the anime costume using REAL cosplay materials.
+Real fabric (silk, leather, cotton), real metal accessories, real wig.
+Colors match character but rendered as physical real-world materials.
+Do NOT draw the costume — show it as real sewn fabric.
+
+MAKEUP (LOCKED — follows character):
+Replicate the anime/game character's makeup using REAL cosmetics on real skin.
+Eye makeup (eyeshadow color, eyeliner style, lashes), lip color, blush placement — all must match the character reference.
+Adapt anime-style makeup into realistic cosplay makeup. No flat anime coloring — real cosmetic texture.
+If character has fantasy elements (markings, glowing eyes), adapt as realistic face paint or contact lenses.
+
+BACKGROUND:
+Use background image as a real scene.
+Real contact shadows. Natural integration. No pasted look.
+
+STYLE ENFORCEMENT:
+This MUST look like a real photograph from a professional cosplay photoshoot.
+Real camera depth of field. Real lighting. Real human.
+FACE CHECK: the face must still be the EXACT same person from the 3×3 grid.
+Absolutely NO anime rendering, NO illustration, NO 2D, NO cel-shading, NO painted look.
+
+IMAGE FORMAT:
+Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
+
+                document.getElementById('outImage').innerText = prompt;
+                document.getElementById('outNegative').innerText = cosplayNegative;
+                return;
+            }
+
+            // NORMAL MODE: Full configurable prompt
+            const pose = ALL_COSPLAY_POSES.find(p => p.id === state.pose);
+            const angle = ANGLES.find(a => a.id === state.angle);
+            const device = DEVICES.find(d => d.id === state.device);
+            const expr = EXPRESSIONS.find(e => e.id === state.expression);
+            const mood = MOODS.find(m => m.id === state.mood);
+
+            const prompt = `PHOTOREALISTIC COSPLAY PHOTOGRAPH — NOT anime art.
+
+IMPORTANT — the anime character image is a COSTUME REFERENCE ONLY.
+Do NOT replicate its art style. Render everything as a REAL PHOTOGRAPH.
+
+FACE (HIGHEST PRIORITY — NON-NEGOTIABLE):
+Use the 3×3 face grid as the ONLY face source. This is a REAL person.
+Face geometry ABSOLUTELY LOCKED — jawline shape, nose bridge, eye spacing, lip shape, cheekbones, forehead, face width, chin must ALL be IDENTICAL to the face reference.
+The result MUST be recognizable as the EXACT same person from the reference. If not, the output is REJECTED.
+Eye shape and eyelid type: LOCKED from reference. Do NOT change to double eyelid or enlarge eyes.
+Skin tone and texture: LOCKED from reference. Real skin with visible pores.
+Expression: ${expr ? expr.prompt : 'neutral'}.
+No beautification. No morphing. No slimming. No smoothing. No Korean/Chinese beauty filter.
+Do NOT let the anime character's face influence the output face in any way.
+
+BODY SHAPE:
+Slim body with full, round, naturally prominent bust.
+Cleavage must be visibly full, round, and prominent when costume allows.
+Do NOT flatten or reduce the bust. Maintain curvy yet slim proportions.
+
+COSTUME (from character reference):
+Recreate the anime costume using REAL cosplay materials.
+Real fabric (silk, leather, cotton), real metal accessories, real wig.
+Colors match character but rendered as physical real-world materials.
+Do NOT draw the costume — show it as real sewn fabric.
+
+MAKEUP (LOCKED — follows character):
+Replicate the anime/game character's makeup using REAL cosmetics on real skin.
+Eye makeup (eyeshadow color, eyeliner style, lashes), lip color, blush placement — all must match the character reference.
+Adapt anime-style makeup into realistic cosplay makeup. No flat anime coloring — real cosmetic texture.
+If character has fantasy elements (markings, glowing eyes), adapt as realistic face paint or contact lenses.
+
+BODY & POSE:
+${pose ? pose.prompt : 'natural pose'}.
+Real body physics — real fabric reacts to gravity and movement.
+
+CAMERA:
+${angle ? angle.prompt : 'eye level medium shot'}.
+${device ? device.prompt : 'iPhone 17 Pro Max, 24mm wide lens, handheld candid'}.
+Real depth of field.
+
+BACKGROUND:
+Use background image as a real scene.
+Natural integration. Real contact shadows. No pasted look.
+
+LIGHTING:
+${mood ? mood.prompt : 'natural ambient'}.
+Match background's existing color temperature.
+Real-world lighting — NOT anime/illustrated lighting.
+
+STYLE ENFORCEMENT:
+This MUST look like a real photograph from a professional cosplay photoshoot.
+Real camera. Real human skin. Real fabric textures.
+FACE CHECK: the face must still be the EXACT same person from the 3×3 grid.
+Absolutely NO anime, NO illustration, NO 2D, NO cel-shading, NO painted look.
+
+IMAGE FORMAT:
+Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
+
+            document.getElementById('outImage').innerText = prompt;
+            document.getElementById('outNegative').innerText = cosplayNegative;
+        }
+
+        // ═══════════════════════════════════════
+        // COPY FUNCTIONS
+        // ═══════════════════════════════════════
+        function copySystem() {
+            const systemText = state.scenePreset === 'SPR02' ? SHADOW_SYSTEM_PROMPT : COSPLAY_SYSTEM_PROMPT;
+            navigator.clipboard.writeText(systemText).then(() => {
+                event.target.textContent = '✅ Copied!';
+                setTimeout(() => { event.target.textContent = '📋 Copy System'; }, 2000);
+            });
+        }
+
+        function copyPrompt() {
+            const p = document.getElementById('outImage').innerText;
+            const n = document.getElementById('outNegative').innerText;
+            const all = `${p}\n\n---\nNEGATIVE:\n${n}`;
+            navigator.clipboard.writeText(all).then(() => {
+                event.target.textContent = '✅ Copied!';
+                setTimeout(() => { event.target.textContent = '📋 Copy Prompt'; }, 2000);
+            });
+        }
+
+        window.onload = init;
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('🍌 [PWA] Service Worker registered!', reg.scope))
+                    .catch(err => console.warn('🍌 [PWA] SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
