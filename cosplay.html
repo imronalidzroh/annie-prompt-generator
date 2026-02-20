@@ -30,8 +30,13 @@
     <div class="page">
         <header>
             <h1>🎭 Annie — Generator Cosplay Anime</h1>
-            <div class="sub">Cosplay Anime • Gabung Wajah • Gemini Nano Banana v5.3</div>
-            <a class="nav-link" href="index.html">← Kembali ke Annie Influencer</a>
+            <div class="sub">
+                Cosplay Anime • Gabung Wajah • Gemini Nano Banana v5.3<br>
+                <button id="btnDataSaver" class="btn-ghost"
+                    style="padding:4px 8px;font-size:0.65rem;border-radius:12px;margin-top:8px;border:1px solid rgba(255,255,255,0.1);"
+                    onclick="toggleDataSaver()">⚡ Hemat Kuota: OFF</button>
+            </div>
+            <a class="nav-link" style="margin-top:8px;" href="index.html">← Kembali ke Annie Influencer</a>
         </header>
 
         <div class="main-layout">
@@ -261,6 +266,17 @@
             console.log(`   Micro Poses: ${MICRO_POSES.length}`);
             console.log(`   Hairstyles: ${HAIRSTYLES.length}`);
 
+            // Initialize Data Saver
+            const noImg = localStorage.getItem('annie_data_saver') === 'true';
+            if (noImg) {
+                state.noImages = true;
+                const btn = document.getElementById('btnDataSaver');
+                if (btn) {
+                    btn.textContent = '⚡ Hemat Kuota: ON';
+                    btn.style.borderColor = 'var(--text-primary)';
+                }
+            }
+
             // Build ALL_COSPLAY_POSES after extensions are merged
             ALL_COSPLAY_POSES = [COSPLAY_EXTRA_POSE, ...POSES];
             console.log(`   ALL_COSPLAY_POSES: ${ALL_COSPLAY_POSES.length}`);
@@ -362,23 +378,28 @@
 
                     // Pass data attributes for the error handler, use SVG as initial placeholder
                     const initSvg = makeSvgPlaceholder(item.id, item.prompt);
+
+                    const imgTag = state.noImages
+                        ? `<img src="${initSvg}" class="vcard-img" alt="${cleanName}">`
+                        : `<img src="${initSvg}" data-src="${imgSrc}" class="vcard-img lazy-thumb" onerror="handleImgError(this, '${item.prompt.replace(/'/g, "\\'")}', '${item.id}')" alt="${cleanName}">`;
+
                     return `<div class="vcard ${selected ? 'selected' : ''} ${compat}"
                                  onclick="selectChip('${stateKey}', '${item.id}')">
                                 <div class="tooltip">${item.prompt}</div>
                                 ${isHot ? '<span class="vcard-tag tag-fire">🔥</span>' : ''}
                                 <div class="vcard-thumb">
-                                    <img src="${initSvg}" data-src="${imgSrc}" class="vcard-img lazy-thumb"
-                                         onerror="handleImgError(this, '${item.prompt.replace(/'/g, "\\'")}', '${item.id}')"
-                                         alt="${cleanName}">
+                                    ${imgTag}
                                 </div>
                                 <div class="vcard-name">${cleanName}</div>
                             </div>`;
                 }).join('');
 
             // Attach observer to newly rendered images
-            document.querySelectorAll(`#${containerId} .lazy-thumb`).forEach(img => {
-                thumbObserver.observe(img);
-            });
+            if (!state.noImages) {
+                document.querySelectorAll(`#${containerId} .lazy-thumb`).forEach(img => {
+                    thumbObserver.observe(img);
+                });
+            }
         }
 
         // ─── IMAGE HANDLING ───
@@ -706,11 +727,22 @@ Vertical 9:16 aspect ratio. High Definition (HD) mobile fullscreen format.`;
         // COPY FUNCTIONS
         // ═══════════════════════════════════════
         function copySystem() {
-            const systemText = state.scenePreset === 'SPR02' ? SHADOW_SYSTEM_PROMPT : COSPLAY_SYSTEM_PROMPT;
-            navigator.clipboard.writeText(systemText).then(() => {
-                event.target.textContent = '✅ Copied!';
-                setTimeout(() => { event.target.textContent = '📋 Copy System'; }, 2000);
-            });
+            const txt = document.querySelector('.out-label.sys').nextSibling.textContent.trim();
+            navigator.clipboard.writeText(txt);
+            const btn = document.querySelector('.btn-sys');
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy System'; }, 3000);
+        }
+
+        function toggleDataSaver() {
+            state.noImages = !state.noImages;
+            localStorage.setItem('annie_data_saver', state.noImages);
+            const btn = document.getElementById('btnDataSaver');
+            if (btn) {
+                btn.textContent = state.noImages ? '⚡ Hemat Kuota: ON' : '⚡ Hemat Kuota: OFF';
+                btn.style.borderColor = state.noImages ? 'var(--text-primary)' : 'rgba(255,255,255,0.1)';
+            }
+            renderAll();
         }
 
         function copyPrompt() {
